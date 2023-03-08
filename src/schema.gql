@@ -1,0 +1,32 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type User {
+  id: Float!
+  name: String!
+  middle_name: String!
+  last_name: String
+  curp: String!
+  rfc: String!
+  phone_number: Int!
+  email: String!
+}
+
+type Query {
+  users: [User!]!
+}
+
+type Mutation {
+  createUser(userInput: CreateUserInput!): User!
+}
+
+input CreateUserInput {
+  name: String!
+  middle_name: String!
+  last_name: String
+  curp: String!
+  rfc: String!
+  phone_number: Int!
+  email: String!
+}

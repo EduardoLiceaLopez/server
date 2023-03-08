@@ -1,22 +1,37 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm/dist';
+import { Repository } from 'typeorm/repository/Repository';
+import { CreateUserInput } from './dto/create-user.input';
 import { User } from './user.entity';
 
 
 @Injectable()
 export class UsersService {
 
+    constructor(
+        @InjectRepository(User)
+        private userReposiroty: Repository<User>,
 
-    finAll(): User[] {
-        return [{
-            id:  1,
-            name: 'Oscar',
-            middle_name: 'Bojorquez',
-            last_name: 'Ruíz',
-            curp: 'Oskiki',
-            rfc: 'Oscar30',
-            phone_number: 558388304,
-            email: 'oscarBQ@gmail.com'
-        }];
+    ){};
+
+
+    /**
+     * 
+     * 
+     * @returns  una repositorio de una entidad (tabla en mysql)
+     * Muestra todos los usuarios
+     */
+    async finAll(): Promise<User[]> {
+
+       return this.userReposiroty.find()
+    }
+    /**
+     * 
+     * 
+     */
+    createUser(users: CreateUserInput): Promise<User>{
+        const newUser = this.userReposiroty.create(users);
+        return this.userReposiroty.save(users);
     }
 
 }
