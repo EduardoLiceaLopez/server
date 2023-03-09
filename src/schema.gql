@@ -2,12 +2,6 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type UserType {
-  id: Int!
-  name: String!
-  users: [User!]
-}
-
 type User {
   id: Float!
   name: String!
@@ -19,6 +13,13 @@ type User {
   email: String!
   user_type_id: Int!
   user_type: UserType!
+  userType: UserType!
+}
+
+type UserType {
+  id: Int!
+  name: String!
+  users: [User!]
 }
 
 type UsersAccess {
@@ -32,17 +33,17 @@ type UsersAccess {
 type Query {
   users: [User!]!
   user(id: Int!): User!
-  usersAccess(id: Int!): UsersAccess!
   userTypes: [UserType!]!
   userType(id: Int!): UserType!
+  usersAccess(id: Int!): UsersAccess!
 }
 
 type Mutation {
   createUser(userInput: CreateUserInput!): User!
+  createUserType(createUserTypeInput: CreateUserTypeInput!): UserType!
   createUsersAccess(createUsersAccessInput: CreateUsersAccessInput!): UsersAccess!
   updateUsersAccess(updateUsersAccessInput: UpdateUsersAccessInput!): UsersAccess!
   removeUsersAccess(id: Int!): UsersAccess!
-  createUserType(createUserTypeInput: CreateUserTypeInput!): UserType!
 }
 
 input CreateUserInput {
@@ -56,6 +57,10 @@ input CreateUserInput {
   user_type_id: Float!
 }
 
+input CreateUserTypeInput {
+  name: String!
+}
+
 input CreateUsersAccessInput {
   """Example field (placeholder)"""
   exampleField: Int!
@@ -65,8 +70,4 @@ input UpdateUsersAccessInput {
   """Example field (placeholder)"""
   exampleField: Int
   id: Int!
-}
-
-input CreateUserTypeInput {
-  name: String!
 }

@@ -1,9 +1,10 @@
-import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { Args, Int, Mutation, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql';
+import { UserType } from 'src/user_types/entities/user_type.entity';
 import { CreateUserInput } from './dto/create-user.input';
 import { User } from './user.entity';
 import { UsersService } from './users.service';
 
-@Resolver()
+@Resolver((of) => User)
 export class UsersResolver {
 
     constructor(private usersService: UsersService){}
@@ -19,6 +20,11 @@ export class UsersResolver {
     user(@Args('id', {type: () => Int}) id : number){
         return this.usersService.finUserById(id);
     }
+
+    @ResolveField((returns) => UserType)
+    userType(@Parent() user: User): Promise<UserType>{
+        return this.usersService.getUserType(user.user_type_id)
+    };
 
 
     //Indica a GraphQl que tomará datos
