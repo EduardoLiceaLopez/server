@@ -7,6 +7,8 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { join } from 'path'; //Puede unir dos directorios
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './users/user.entity';
+import { UsersAccessModule } from './users_access/users_access.module';
+import { UserTypesModule } from './user_types/user_types.module';
 
 @Module({
   imports: [GraphQLModule.forRoot<ApolloDriverConfig>({
@@ -22,11 +24,10 @@ import { User } from './users/user.entity';
     port: 3306,
     username: 'root',
     password: 'liceedu12',
-    entities: [User],
-  //autoLoadEntities: true,
+    autoLoadEntities: true,
     synchronize: true,
   })
-  ,UsersModule],
+  ,UsersModule, UsersAccessModule, UserTypesModule],
 
   controllers: [AppController],
   providers: [AppService],

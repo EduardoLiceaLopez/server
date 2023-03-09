@@ -2,6 +2,12 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type UserType {
+  id: Int!
+  name: String!
+  users: [User!]
+}
+
 type User {
   id: Float!
   name: String!
@@ -11,14 +17,32 @@ type User {
   rfc: String!
   phone_number: Int!
   email: String!
+  user_type_id: Int!
+  user_type: UserType!
+}
+
+type UsersAccess {
+  id: Int!
+  user_id: [User!]
+  user_name: String!
+  password: String!
+  user_role: String!
 }
 
 type Query {
   users: [User!]!
+  user(id: Int!): User!
+  usersAccess(id: Int!): UsersAccess!
+  userTypes: [UserType!]!
+  userType(id: Int!): UserType!
 }
 
 type Mutation {
   createUser(userInput: CreateUserInput!): User!
+  createUsersAccess(createUsersAccessInput: CreateUsersAccessInput!): UsersAccess!
+  updateUsersAccess(updateUsersAccessInput: UpdateUsersAccessInput!): UsersAccess!
+  removeUsersAccess(id: Int!): UsersAccess!
+  createUserType(createUserTypeInput: CreateUserTypeInput!): UserType!
 }
 
 input CreateUserInput {
@@ -29,4 +53,20 @@ input CreateUserInput {
   rfc: String!
   phone_number: Int!
   email: String!
+  user_type_id: Float!
+}
+
+input CreateUsersAccessInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input UpdateUsersAccessInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}
+
+input CreateUserTypeInput {
+  name: String!
 }

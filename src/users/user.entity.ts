@@ -1,5 +1,8 @@
 import { ObjectType, Field, Int } from "@nestjs/graphql";
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { CONNREFUSED } from "dns";
+import { UsersAccess } from "src/users_access/entities/users_access.entity";
+import { UserType } from "src/user_types/entities/user_type.entity";
+import { Column, Entity, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
 
     @Entity('users')
@@ -37,6 +40,14 @@ import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
         @Column()
         @Field()
         email: string;
+    
+        @Column()
+        @Field(() => Int)
+        user_type_id: number;
+
+        @ManyToOne(() => UserType, (userType) => userType.users)
+        @Field(()=> UserType)
+        user_type: UserType;
     }
 
 

@@ -29,9 +29,24 @@ export class UsersService {
      * 
      * 
      */
+
+    async finUserById(id : number): Promise<User>{
+        return  this.userReposiroty.findOne({
+            where: {
+                id,
+            }
+
+        });
+    }
+
+    /**
+     * 
+     * 
+     */
     createUser(users: CreateUserInput): Promise<User>{
         const newUser = this.userReposiroty.create(users);
         return this.userReposiroty.save(users);
+        
     }
 
 }

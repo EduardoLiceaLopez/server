@@ -1,4 +1,4 @@
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { CreateUserInput } from './dto/create-user.input';
 import { User } from './user.entity';
 import { UsersService } from './users.service';
@@ -14,6 +14,12 @@ export class UsersResolver {
     users(){
         return this.usersService.finAll();
     }
+
+    @Query((returns) => User)
+    user(@Args('id', {type: () => Int}) id : number){
+        return this.usersService.finUserById(id);
+    }
+
 
     //Indica a GraphQl que tomará datos
     @Mutation((returns) => User)
