@@ -16,12 +16,11 @@ import { User } from "../user.entity";
     last_name?: string;
 
     @MaxLength(18, {message: 'El CURP se conforma máximo 18 carcateres'})
-    @MinLength(18, {message: 'EL CURP se conforma por mámixo 18 caracteres'})
+    @MinLength(18, {message: 'EL CURP se conforma por mínimo 18 caracteres'})
     @Field()
     curp: string;
-    @IsInt()
 
-    @MinLength(13, {message: 'El RFC se conforma máximo de 13 carcateres'})
+    @MinLength(13, {message: 'El RFC se conforma mínimmo de 13 carcateres'})
     @MaxLength(13, {message: 'El RFC se conforma máximo 13 carcateres'})
     @Field()
     rfc: string;

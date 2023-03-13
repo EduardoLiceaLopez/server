@@ -1,6 +1,7 @@
 import { Args, Int, Mutation, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql';
 import { UserType } from 'src/user_types/entities/user_type.entity';
 import { CreateUserInput } from './dto/create-user.input';
+import { UpdateUserInput } from './dto/update-user.input';
 import { User } from './user.entity';
 import { UsersService } from './users.service';
 
@@ -33,6 +34,20 @@ export class UsersResolver {
         return this.usersService.createUser(userInput);
 
     }
+
+
+
+  @Mutation(() => User)
+  updateUser(@Args('updateUserInput') updateUserInput: UpdateUserInput) {
+    return this.usersService.updateUser(updateUserInput.id, updateUserInput);
+  }
+
+  
+  @Mutation(() => Boolean)
+     removeUser(@Args('id', { type: () => Int }) id: number): Promise<boolean> {
+    return this.usersService.deleteUser(id);
+  }
+  
 
 
 }

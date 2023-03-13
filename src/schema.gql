@@ -40,6 +40,8 @@ type Query {
 
 type Mutation {
   createUser(userInput: CreateUserInput!): User!
+  updateUser(updateUserInput: UpdateUserInput!): User!
+  removeUser(id: Int!): Boolean!
   createUserType(createUserTypeInput: CreateUserTypeInput!): UserType!
   createUsersAccess(createUsersAccessInput: CreateUsersAccessInput!): UsersAccess!
   updateUsersAccess(updateUsersAccessInput: UpdateUsersAccessInput!): UsersAccess!
@@ -55,6 +57,18 @@ input CreateUserInput {
   phone_number: Int!
   email: String!
   user_type_id: Float!
+}
+
+input UpdateUserInput {
+  name: String
+  middle_name: String
+  last_name: String
+  curp: String
+  rfc: String
+  phone_number: Int
+  email: String
+  user_type_id: Float
+  id: Int!
 }
 
 input CreateUserTypeInput {
