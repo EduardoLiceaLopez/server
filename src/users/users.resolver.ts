@@ -23,8 +23,17 @@ export class UsersResolver {
     }
 
     @ResolveField((returns) => UserType)
-    userType(@Parent() user: User): Promise<UserType>{
-        return this.usersService.getUserType(user.user_type_id)
+    async  userType(@Parent() user: User): Promise<UserType>{
+      const userType = await this.usersService.getUserType(user.user_type_id);
+        //return this.usersService.getUserType(user.user_type_id)
+        if (!userType){
+          return{
+            id: parseInt('0', 10),
+            name: 'Not Avalible user_type for this user',
+            users: [],
+          };
+        }
+        return userType;
     };
 
 

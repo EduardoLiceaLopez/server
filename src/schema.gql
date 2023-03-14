@@ -18,7 +18,7 @@ type User {
   phone_number: Int!
   email: String!
   user_type_id: Int
-  user_type: UserType
+  user_type: UserType @deprecated(reason: "This field has been removed and will always return null")
   userType: UserType!
 }
 
