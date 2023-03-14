@@ -1,5 +1,7 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { UpdateUserInput } from 'src/users/dto/update-user.input';
+import { User } from 'src/users/user.entity';
 import { UsersAccess } from 'src/users_access/entities/users_access.entity';
 import { Repository } from 'typeorm';
 import { CreateUserTypeInput } from './dto/create-user_type.input';
@@ -11,7 +13,11 @@ export class UserTypesService {
 
   constructor(
     @InjectRepository(UserType)
-    private userTypeRepository: Repository<UserType>
+    private userTypeRepository: Repository<UserType>,
+    
+    @InjectRepository(User)
+    private userRepository: Repository<User>,
+
   ){};
 
   create(createUserTypeInput: CreateUserTypeInput): Promise<UserType> {
@@ -31,13 +37,60 @@ export class UserTypesService {
       }
     });
   }
-/*
-  update(id: number, updateUserTypeInput: UpdateUserTypeInput) {
-    return `This action updates a #${id} userType`;
-  }
 
-  remove(id: number) {
-    return `This action removes a #${id} userType`;
-  }
-  */
+    async updateUserType(id: number, updateUserTypeInput: UpdateUserTypeInput){
+
+
+      const userType = await this.userTypeRepository.findOne({
+        where:{id,}
+      })
+      if (userType){
+        await this.userTypeRepository.update(id, updateUserTypeInput);
+        return this.userTypeRepository.findOne({
+          where:{id}
+        })
+      
+      }else{
+        throw new NotFoundException (`User_Type with ID ${id} not found`);
+      }
+    };
+
+    //Borrar 
+    async deleteUserType(id: number): Promise<boolean>{
+
+      const userType = await this.userTypeRepository.findOne({
+        where: {id}
+      });
+
+      if (userType){
+        const user_id = userType.users;
+        await this.userTypeRepository.delete(id);
+        await this.userRepository
+              .createQueryBuilder()
+              .delete()
+              .where("id = :user_id", {user_id})
+              .execute();
+        return true;
+    
+      }else{
+        throw new NotFoundException (`User_Type with ID ${id} not found`);
+      }
+    };
+    
+
+    /*
+    async deleteUserType(id: number): Promise<boolean>{
+      const userType = await this.userTypeRepository.findOne({
+        where: {id,}
+      })
+      if (userType){
+
+        const result = await this.userTypeRepository.delete(id);
+        return result.affected !== 0;
+      }else{
+        throw new NotFoundException (`User with ID ${id} not found`);
+      }
+    }
+    */
+
 }

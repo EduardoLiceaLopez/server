@@ -88,12 +88,11 @@ export class UsersService {
         if (user){
             const result = await this.userRepository.delete(id);
             return result.affected !== 0;
-            
         }else{
             throw new NotFoundException (`User with ID ${id} not found`);
         }
 
-      }
+      };
 
 
 

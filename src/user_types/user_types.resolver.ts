@@ -22,15 +22,15 @@ export class UserTypesResolver {
   findOne(@Args('id', { type: () => Int }) id: number) {
     return this.userTypesService.findOne(id);
   }
-  /*
+  
   @Mutation(() => UserType)
   updateUserType(@Args('updateUserTypeInput') updateUserTypeInput: UpdateUserTypeInput) {
-    return this.userTypesService.update(updateUserTypeInput.id, updateUserTypeInput);
+    return this.userTypesService.updateUserType(updateUserTypeInput.id, updateUserTypeInput);
   }
 
-  @Mutation(() => UserType)
-  removeUserType(@Args('id', { type: () => Int }) id: number) {
-    return this.userTypesService.remove(id);
+  @Mutation(() => Boolean)
+  removeUserType(@Args('id', { type: () => Int }) id: number): Promise<boolean> {
+    return this.userTypesService.deleteUserType(id);
   }
-  */
+  
 }

@@ -32,7 +32,7 @@ import { User } from "../user.entity";
     email: string;
 
 
-    @Field()
+    @Field({ nullable: true })
     user_type_id: number;
 
 }

@@ -42,12 +42,12 @@ import { Column, Entity, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from "t
         email: string;
     
         @Column()
-        @Field(() => Int)
+        @Field(() => Int, { nullable: true })
         user_type_id: number;
 
         @ManyToOne(() => UserType, (userType) => userType.users)
-        @Field(()=> UserType)
-        user_type: UserType;
+        @Field(()=> UserType, { nullable: true })
+        user_type?: UserType;
     }
 
 
