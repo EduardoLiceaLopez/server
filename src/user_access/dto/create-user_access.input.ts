@@ -12,7 +12,7 @@ export class CreateUserAccessInput {
   user_id: number;
 
   @Field()
-  @MinLength(18, {message: 'The password requiered min 8 characters'})
+  @MinLength(8, {message: 'The password requiered min 8 characters'})
   password: string;
   
 

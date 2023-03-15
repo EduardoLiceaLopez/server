@@ -37,21 +37,26 @@ export class UsersService {
      */
 
     async finUserById(id : number): Promise<User>{
-        return  this.userRepository.findOne({
+        const user = await this.userRepository.findOne({
             where: {
                 id,
             }
+        })
 
-        });
-    }
+        if (user){
+            return user;
+        } else{
+            throw new NotFoundException(`User with ID ${id} not found`);
+        }
+    };
 
     /**
      * 
-     * 
+     *
      */
     createUser(users: CreateUserInput): Promise<User>{
         const newUser = this.userRepository.create(users);
-        return this.userRepository.save(users);
+        return this.userRepository.save(newUser);//Correción
         
     }
 
@@ -61,7 +66,7 @@ export class UsersService {
         return this.usersTypeService.findOne(user_type_id)
     };
 
-
+//
     async updateUser(id: number, updateUserInput: UpdateUserInput){
 
         const user = await this.userRepository.findOne({

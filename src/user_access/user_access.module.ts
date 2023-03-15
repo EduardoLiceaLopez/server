@@ -5,10 +5,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserAccess } from './entities/user_access.entity';
 import { User } from 'src/users/user.entity';
 import { UsersAccessService } from 'src/users_access/users_access.service';
+import { UsersService } from 'src/users/users.service';
+import { UsersModule } from 'src/users/users.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([UserAccess, User]), UserAccessModule],
+  imports: [TypeOrmModule.forFeature([UserAccess]), UserAccessModule, UsersModule],
   providers: [UserAccessResolver, UserAccessService],
-  exports: [UsersAccessService]
 })
 export class UserAccessModule {}

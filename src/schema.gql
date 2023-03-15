@@ -2,6 +2,15 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type UserAccess {
+  id: Int!
+  user: User
+  user_id: Int!
+  user_name: String!
+  password: String!
+  user_role: String!
+}
+
 type UserType {
   id: Int!
   name: String!
@@ -15,10 +24,11 @@ type User {
   last_name: String
   curp: String!
   rfc: String!
-  phone_number: Int!
+  phone_number: String!
   email: String!
   user_type_id: Int
   user_type: UserType @deprecated(reason: "This field has been removed and will always return null")
+  user_access: [UserAccess!]
   userType: UserType!
 }
 
@@ -35,7 +45,8 @@ type Query {
   user(id: Int!): User!
   userTypes: [UserType!]!
   userType(id: Int!): UserType!
-  usersAccess(id: Int!): UsersAccess!
+  usersAccess: [UserAccess!]!
+  userAccess(id: Int!): UserAccess!
 }
 
 type Mutation {
@@ -48,6 +59,9 @@ type Mutation {
   createUsersAccess(createUsersAccessInput: CreateUsersAccessInput!): UsersAccess!
   updateUsersAccess(updateUsersAccessInput: UpdateUsersAccessInput!): UsersAccess!
   removeUsersAccess(id: Int!): UsersAccess!
+  createUserAccess(userAccessInput: CreateUserAccessInput!): UserAccess!
+  updateUserAccess(updateUserAccess: UpdateUserAccessInput!): UserAccess!
+  removeUserAccess(id: Int!): Boolean!
 }
 
 input CreateUserInput {
@@ -56,7 +70,7 @@ input CreateUserInput {
   last_name: String
   curp: String!
   rfc: String!
-  phone_number: Int!
+  phone_number: String!
   email: String!
   user_type_id: Float
 }
@@ -67,7 +81,7 @@ input UpdateUserInput {
   last_name: String
   curp: String
   rfc: String
-  phone_number: Int
+  phone_number: String
   email: String
   user_type_id: Float
   id: Int!
@@ -90,5 +104,20 @@ input CreateUsersAccessInput {
 input UpdateUsersAccessInput {
   """Example field (placeholder)"""
   exampleField: Int
+  id: Int!
+}
+
+input CreateUserAccessInput {
+  user_name: String!
+  user_id: Int!
+  password: String!
+  user_role: String!
+}
+
+input UpdateUserAccessInput {
+  user_name: String
+  user_id: Int
+  password: String
+  user_role: String
   id: Int!
 }
