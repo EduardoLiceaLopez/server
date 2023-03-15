@@ -9,6 +9,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './users/user.entity';
 import { UsersAccessModule } from './users_access/users_access.module';
 import { UserTypesModule } from './user_types/user_types.module';
+import { UserAccessModule } from './user_access/user_access.module';
 
 @Module({
   imports: [GraphQLModule.forRoot<ApolloDriverConfig>({
@@ -27,7 +28,7 @@ import { UserTypesModule } from './user_types/user_types.module';
     autoLoadEntities: true,
     synchronize: true,
   })
-  ,UsersModule, UsersAccessModule, UserTypesModule],
+  ,UsersModule, UsersAccessModule, UserTypesModule, UserAccessModule],
 
   controllers: [AppController],
   providers: [AppService],

@@ -1,12 +1,12 @@
 import { ObjectType, Field, Int } from "@nestjs/graphql";
 
-import { UsersAccess } from "src/users_access/entities/users_access.entity";
+import { UserAccess } from "src/user_access/entities/user_access.entity";
 import { UserType } from "src/user_types/entities/user_type.entity";
-import { Column, Entity, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 
-    @Entity('users')
-    @ObjectType()
+@Entity('users')
+@ObjectType()
 
     export class User {
         @PrimaryGeneratedColumn()
@@ -49,6 +49,10 @@ import { Column, Entity, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from "t
         //@Field(()=> UserType, { nullable: true })
         @Field({ nullable: true, deprecationReason: 'This field has been removed and will always return null' })
         user_type?: UserType;
+
+       @OneToMany(()=> UserAccess, (userAccess) => userAccess.user)
+       @Field(()=> [UserAccess], {nullable: true})
+       user_access: UserAccess[];
     }
 
 
