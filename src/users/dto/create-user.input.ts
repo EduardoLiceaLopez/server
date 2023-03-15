@@ -25,8 +25,8 @@ import { User } from "../user.entity";
     @Field()
     rfc: string;
     
-    @Field((type) => Int)
-    phone_number: number;
+    @Field((type) => String)
+    phone_number: string;
     
     @Field()
     email: string;

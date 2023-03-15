@@ -34,8 +34,8 @@ import { Column, Entity, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from "t
         rfc: string;
         
         @Column()
-        @Field((type) => Int)
-        phone_number: number;
+        @Field((type) => String)
+        phone_number: string;
         
         @Column()
         @Field()
