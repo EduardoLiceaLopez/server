@@ -10,6 +10,9 @@ import { User } from './users/user.entity';
 import { UsersAccessModule } from './users_access/users_access.module';
 import { UserTypesModule } from './user_types/user_types.module';
 import { UserAccessModule } from './user_access/user_access.module';
+import { AuthModule } from './auth/auth.module';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+
 
 @Module({
   imports: [GraphQLModule.forRoot<ApolloDriverConfig>({
@@ -28,9 +31,10 @@ import { UserAccessModule } from './user_access/user_access.module';
     autoLoadEntities: true,
     synchronize: true,
   })
-  ,UsersModule, UsersAccessModule, UserTypesModule, UserAccessModule],
+  ,UsersModule, UsersAccessModule, UserTypesModule, UserAccessModule, AuthModule, ConfigModule.forRoot()],
 
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, ConfigModule],
+
 })
 export class AppModule {}

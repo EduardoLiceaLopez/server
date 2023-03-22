@@ -7,7 +7,6 @@ type UserAccess {
   user: User
   user_id: Int!
   user_name: String!
-  password: String!
   user_role: String!
 }
 
@@ -47,6 +46,7 @@ type Query {
   userType(id: Int!): UserType!
   usersAccess: [UserAccess!]!
   userAccess(id: Int!): UserAccess!
+  userAccesByUserName(user_name: String!): UserAccess!
 }
 
 type Mutation {

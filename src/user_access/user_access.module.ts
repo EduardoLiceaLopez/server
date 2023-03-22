@@ -11,5 +11,6 @@ import { UsersModule } from 'src/users/users.module';
 @Module({
   imports: [TypeOrmModule.forFeature([UserAccess]), UserAccessModule, UsersModule],
   providers: [UserAccessResolver, UserAccessService],
+  exports: [UserAccessService],
 })
 export class UserAccessModule {}

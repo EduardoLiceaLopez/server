@@ -24,7 +24,7 @@ export class UserAccess {
   user_name: string;
 
   @Column()
-  @Field(()=> String)
+  //@Field(()=> String)
   password: string;
 
   @Column()

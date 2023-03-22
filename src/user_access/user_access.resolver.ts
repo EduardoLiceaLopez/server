@@ -7,6 +7,8 @@ import { Inject, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/users/user.entity';
 import { Repository } from 'typeorm';
+import { LoggedUserAccessOutput } from './dto/logged-userAccess.output';
+import { LoginUserAccessInput } from './dto/login-userAccess.input';
 
 @Resolver(() => UserAccess)
 export class UserAccessResolver {
@@ -26,8 +28,13 @@ export class UserAccessResolver {
 
     @Query((returns)=> UserAccess)
     userAccess(@Args('id', {type: () => Int}) id: number){
-
       return this.userAccessService.findOne(id);
+    };
+
+    //encontrar por el user_name
+    @Query((returns)=> UserAccess)
+    userAccesByUserName(@Args('user_name', {type: () => String}) user_name: string){
+      return this.userAccessService.findOneByuser_name(user_name);
     };
 
 
@@ -58,6 +65,12 @@ export class UserAccessResolver {
         return user;
       }
 
+    };
+
+
+    @Mutation(()=> LoggedUserAccessOutput)
+    loginUserAccess(@Args('loginUserAccessInput') LoginUserAccessInput: LoginUserAccessInput){
+      return this.userAccessService.loginUser(LoginUserAccessInput);
     }
 
   }
