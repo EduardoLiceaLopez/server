@@ -10,6 +10,7 @@ import { User } from './users/user.entity';
 import { UsersAccessModule } from './users_access/users_access.module';
 import { UserTypesModule } from './user_types/user_types.module';
 import { UserAccessModule } from './user_access/user_access.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [GraphQLModule.forRoot<ApolloDriverConfig>({
@@ -28,7 +29,7 @@ import { UserAccessModule } from './user_access/user_access.module';
     autoLoadEntities: true,
     synchronize: true,
   })
-  ,UsersModule, UsersAccessModule, UserTypesModule, UserAccessModule],
+  ,UsersModule, UsersAccessModule, UserTypesModule, UserAccessModule, AuthModule],
 
   controllers: [AppController],
   providers: [AppService],

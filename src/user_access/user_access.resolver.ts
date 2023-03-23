@@ -30,6 +30,11 @@ export class UserAccessResolver {
       return this.userAccessService.findOne(id);
     };
 
+    @Query((returns)=> UserAccess)
+    userAccessByUserName( @Args('user_name', {type: ()=> String}) user_name: string){
+      return this.userAccessService.findOneByUserName(user_name);
+    }
+
 
     @Mutation((returns) => UserAccess)
     createUserAccess(@Args('userAccessInput') userAccessInput: CreateUserAccessInput){
