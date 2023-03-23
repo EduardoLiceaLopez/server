@@ -13,7 +13,8 @@ export class AuthService {
 
         if(userAccess && userAccess.password === password){
             const {password, ...result} = userAccess;
-            return userAccess;
+            return result;
+
         }else{
 
             return null;
@@ -26,7 +27,7 @@ export class AuthService {
 
         return {
             acces_token: 'jwt',
-            userAccess,
+            userAccess: result,
         };
 
     }

@@ -24,11 +24,6 @@ export class UserAccessResolver {
       return this.userAccessService.findAll();
     };
 
-    @Query((returns)=> UserAccess)
-    userAccess(@Args('id', {type: () => Int}) id: number){
-
-      return this.userAccessService.findOne(id);
-    };
 
     @Query((returns)=> UserAccess)
     userAccessByUserName( @Args('user_name', {type: ()=> String}) user_name: string){
