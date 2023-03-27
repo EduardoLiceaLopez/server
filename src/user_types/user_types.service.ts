@@ -2,7 +2,6 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UpdateUserInput } from 'src/users/dto/update-user.input';
 import { User } from 'src/users/user.entity';
-import { UsersAccess } from 'src/users_access/entities/users_access.entity';
 import { Repository } from 'typeorm';
 import { CreateUserTypeInput } from './dto/create-user_type.input';
 import { UpdateUserTypeInput } from './dto/update-user_type.input';

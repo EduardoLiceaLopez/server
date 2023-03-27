@@ -7,22 +7,20 @@ export class AuthService {
 
     constructor(private userAccessService: UserAccessService){}
 
-    async validateUserAccess(user_name: string, password: string){
+    async validateUserAccess(user_name: string, password: string): Promise <any>{
 
-        const userAccess = await this.userAccessService.findOneByUserName(user_name);
+        const userAccess = await this.userAccessService.findOne(user_name);
 
         if(userAccess && userAccess.password === password){
             const {password, ...result} = userAccess;
             return result;
 
-        }else{
-
-            return null;
         }
+            return null;
     };
 
     async login(loginUserInput: LoginUserInput){
-        const userAccess = await this.userAccessService.findOneByUserName(loginUserInput.user_name);
+        const userAccess = await this.userAccessService.findOne(loginUserInput.user_name);
         const {password, ...result} = userAccess;
 
         return {

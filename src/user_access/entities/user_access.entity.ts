@@ -23,6 +23,7 @@ export class UserAccess {
   @Field(()=> String)
   user_name: string;
 
+  //sasajsasa
   @Column()
   @Field(()=> String)
   password: string;

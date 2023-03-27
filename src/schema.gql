@@ -2,42 +2,26 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type UserAccess {
-  id: Int!
-  user: User
+input CreateUserAccessInput {
+  password: String!
   user_id: Int!
   user_name: String!
-  password: String!
   user_role: String!
 }
 
-type UserType {
-  id: Int!
-  name: String!
-  users: [User!]
-}
-
-type User {
-  id: Float!
-  name: String!
-  middle_name: String!
-  last_name: String
+input CreateUserInput {
   curp: String!
-  rfc: String!
-  phone_number: String!
   email: String!
-  user_type_id: Int
-  user_type: UserType @deprecated(reason: "This field has been removed and will always return null")
-  user_access: [UserAccess!]
-  userType: UserType!
+  last_name: String
+  middle_name: String!
+  name: String!
+  phone_number: String!
+  rfc: String!
+  user_type_id: Float
 }
 
-type UsersAccess {
-  id: Int!
-  user_id: [User!]
-  user_name: String!
-  password: String!
-  user_role: String!
+input CreateUserTypeInput {
+  name: String!
 }
 
 type LoginResponse {
@@ -45,88 +29,84 @@ type LoginResponse {
   userAccess: UserAccess!
 }
 
-type Query {
-  users: [User!]!
-  user(id: Int!): User!
-  userTypes: [UserType!]!
-  userType(id: Int!): UserType!
-  usersAccess: [UserAccess!]!
-  userAccessByUserName(user_name: String!): UserAccess!
+input LoginUserInput {
+  password: String!
+  user_name: String!
 }
 
 type Mutation {
   createUser(userInput: CreateUserInput!): User!
-  updateUser(updateUserInput: UpdateUserInput!): User!
-  removeUser(id: Int!): Boolean!
-  createUserType(createUserTypeInput: CreateUserTypeInput!): UserType!
-  updateUserType(updateUserTypeInput: UpdateUserTypeInput!): UserType!
-  removeUserType(id: Int!): Boolean!
-  createUsersAccess(createUsersAccessInput: CreateUsersAccessInput!): UsersAccess!
-  updateUsersAccess(updateUsersAccessInput: UpdateUsersAccessInput!): UsersAccess!
-  removeUsersAccess(id: Int!): UsersAccess!
   createUserAccess(userAccessInput: CreateUserAccessInput!): UserAccess!
-  updateUserAccess(updateUserAccess: UpdateUserAccessInput!): UserAccess!
-  removeUserAccess(id: Int!): Boolean!
+  createUserType(createUserTypeInput: CreateUserTypeInput!): UserType!
   login(loginUserInput: LoginUserInput!): LoginResponse!
+  removeUser(id: Int!): Boolean!
+  removeUserAccess(id: Int!): Boolean!
+  removeUserType(id: Int!): Boolean!
+  updateUser(updateUserInput: UpdateUserInput!): User!
+  updateUserAccess(updateUserAccess: UpdateUserAccessInput!): UserAccess!
+  updateUserType(updateUserTypeInput: UpdateUserTypeInput!): UserType!
 }
 
-input CreateUserInput {
-  name: String!
-  middle_name: String!
-  last_name: String
-  curp: String!
-  rfc: String!
-  phone_number: String!
-  email: String!
-  user_type_id: Float
-}
-
-input UpdateUserInput {
-  name: String
-  middle_name: String
-  last_name: String
-  curp: String
-  rfc: String
-  phone_number: String
-  email: String
-  user_type_id: Float
-  id: Int!
-}
-
-input CreateUserTypeInput {
-  name: String!
-}
-
-input UpdateUserTypeInput {
-  name: String
-  id: Int!
-}
-
-input CreateUsersAccessInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
-}
-
-input UpdateUsersAccessInput {
-  """Example field (placeholder)"""
-  exampleField: Int
-  id: Int!
-}
-
-input CreateUserAccessInput {
-  user_name: String!
-  user_id: Int!
-  user_role: String!
+type Query {
+  user(id: Int!): User!
+  userAccess(user_name: String!): UserAccess!
+  userType(id: Int!): UserType!
+  userTypes: [UserType!]!
+  users: [User!]!
+  usersAccess: [UserAccess!]!
 }
 
 input UpdateUserAccessInput {
-  user_name: String
-  user_id: Int
-  user_role: String
   id: Int!
+  password: String
+  user_id: Int
+  user_name: String
+  user_role: String
 }
 
-input LoginUserInput {
-  user_name: String!
+input UpdateUserInput {
+  curp: String
+  email: String
+  id: Int!
+  last_name: String
+  middle_name: String
+  name: String
+  phone_number: String
+  rfc: String
+  user_type_id: Float
+}
+
+input UpdateUserTypeInput {
+  id: Int!
+  name: String
+}
+
+type User {
+  curp: String!
+  email: String!
+  id: Float!
+  last_name: String
+  middle_name: String!
+  name: String!
+  phone_number: String!
+  rfc: String!
+  userType: UserType!
+  user_access: [UserAccess!]
+  user_type: UserType @deprecated(reason: "This field has been removed and will always return null")
+  user_type_id: Int
+}
+
+type UserAccess {
+  id: Int!
   password: String!
+  user: User
+  user_id: Int!
+  user_name: String!
+  user_role: String!
+}
+
+type UserType {
+  id: Int!
+  name: String!
+  users: [User!]
 }

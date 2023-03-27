@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/users/user.entity';
 import { UsersService } from 'src/users/users.service';
-import { Repository } from 'typeorm';
+import { FindOneOptions, Repository } from 'typeorm';
 import { CreateUserAccessInput } from './dto/create-user_access.input';
 import { UpdateUserAccessInput } from './dto/update-user_access.input';
 import { UserAccess } from './entities/user_access.entity';
@@ -36,40 +36,14 @@ export class UserAccessService {
     }
     
   };
-  async findOneByUserName(user_name: string): Promise<UserAccess>{
-    const userAccess = await this.userAccessRepository.findOne({
-      where:{
-        user_name,
-      }
-    });
 
-    if (userAccess){
+  async findOne(user_name: string): Promise<UserAccess| undefined> {
+    const options: FindOneOptions<UserAccess> = {
+      where: { user_name: user_name },
+    };
 
-      return userAccess;
-
-    } else {
-
-      throw new NotFoundException(`User with user name ${user_name} not found`);
-    }
-  };
-
-  async findOne(id: number): Promise<UserAccess> {
-
-    const userAccess = await this.userAccessRepository.findOne({
-      where:{
-        id,
-      }
-    });
-
-    if (userAccess){
-
-      return userAccess;
-    } else {
-
-      throw new NotFoundException(`User with ID ${id} not found`);
-    }
-
-  };
+    return this.userAccessRepository.findOne(options);
+  }
 
   async update(id: number, updateUserAccess: UpdateUserAccessInput){
 
@@ -108,9 +82,5 @@ export class UserAccessService {
   getUser(user_id: number): Promise<User>{
     return this.usersService.finUserById(user_id);
   };
-
-  
-
-
 
 }

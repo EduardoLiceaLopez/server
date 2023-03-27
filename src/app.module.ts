@@ -7,7 +7,6 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { join } from 'path'; //Puede unir dos directorios
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './users/user.entity';
-import { UsersAccessModule } from './users_access/users_access.module';
 import { UserTypesModule } from './user_types/user_types.module';
 import { UserAccessModule } from './user_access/user_access.module';
 import { AuthModule } from './auth/auth.module';
@@ -17,6 +16,7 @@ import { AuthModule } from './auth/auth.module';
     driver: ApolloDriver,
     autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
                           //ruta actual
+    sortSchema: true,                          
   }) 
   , TypeOrmModule.forRoot({
     type: 'mysql',
@@ -29,7 +29,7 @@ import { AuthModule } from './auth/auth.module';
     autoLoadEntities: true,
     synchronize: true,
   })
-  ,UsersModule, UsersAccessModule, UserTypesModule, UserAccessModule, AuthModule],
+  ,UsersModule, UserTypesModule, UserAccessModule, AuthModule],
 
   controllers: [AppController],
   providers: [AppService],

@@ -3,10 +3,9 @@ import { UserAccessService } from './user_access.service';
 import { UserAccess } from './entities/user_access.entity';
 import { CreateUserAccessInput } from './dto/create-user_access.input';
 import { UpdateUserAccessInput } from './dto/update-user_access.input';
-import { Inject, NotFoundException } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
+import { NotFoundException } from '@nestjs/common';
 import { User } from 'src/users/user.entity';
-import { Repository } from 'typeorm';
+
 
 @Resolver(() => UserAccess)
 export class UserAccessResolver {
@@ -24,11 +23,11 @@ export class UserAccessResolver {
       return this.userAccessService.findAll();
     };
 
-
-    @Query((returns)=> UserAccess)
-    userAccessByUserName( @Args('user_name', {type: ()=> String}) user_name: string){
-      return this.userAccessService.findOneByUserName(user_name);
+    @Query((returns)=> UserAccess, {name: 'userAccess'})
+    findOne(@Args('user_name') user_name: string){
+      return this.userAccessService.findOne(user_name);
     }
+
 
 
     @Mutation((returns) => UserAccess)
