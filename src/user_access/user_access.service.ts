@@ -10,12 +10,14 @@ import { UserAccess } from './entities/user_access.entity';
 @Injectable()
 export class UserAccessService {
 
+   
     //Inyección de repositorio y servicio
     constructor(
       @InjectRepository(UserAccess)
       private userAccessRepository: Repository<UserAccess>,
 
       private usersService: UsersService,
+      
       ){};
 
   //Funciones
@@ -38,12 +40,9 @@ export class UserAccessService {
   };
 
   async findOne(user_name: string): Promise<UserAccess| undefined> {
-    const options: FindOneOptions<UserAccess> = {
-      where: { user_name: user_name },
+    return this.userAccessRepository.findOneBy({user_name})
     };
 
-    return this.userAccessRepository.findOne(options);
-  }
 
   async update(id: number, updateUserAccess: UpdateUserAccessInput){
 

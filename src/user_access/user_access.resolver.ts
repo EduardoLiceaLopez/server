@@ -23,6 +23,8 @@ export class UserAccessResolver {
       return this.userAccessService.findAll();
     };
 
+    
+
     @Query((returns)=> UserAccess, {name: 'userAccess'})
     findOne(@Args('user_name') user_name: string){
       return this.userAccessService.findOne(user_name);

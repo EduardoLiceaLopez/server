@@ -25,7 +25,7 @@ input CreateUserTypeInput {
 }
 
 type LoginResponse {
-  access_token: String!
+  access_token: String
   userAccess: UserAccess!
 }
 
@@ -38,7 +38,7 @@ type Mutation {
   createUser(userInput: CreateUserInput!): User!
   createUserAccess(userAccessInput: CreateUserAccessInput!): UserAccess!
   createUserType(createUserTypeInput: CreateUserTypeInput!): UserType!
-  login(loginUserInput: LoginUserInput!): LoginResponse!
+  login(loginUserInput: LoginUserInput!): LoginResponse
   removeUser(id: Int!): Boolean!
   removeUserAccess(id: Int!): Boolean!
   removeUserType(id: Int!): Boolean!
