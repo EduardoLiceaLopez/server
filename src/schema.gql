@@ -25,7 +25,7 @@ input CreateUserTypeInput {
 }
 
 type LoginResponse {
-  access_token: String
+  access_token: String!
   userAccess: UserAccess!
 }
 

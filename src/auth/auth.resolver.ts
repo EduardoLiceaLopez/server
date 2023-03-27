@@ -11,14 +11,10 @@ export class AuthResolver {
 
     constructor(private authService: AuthService){}
 
-
-    @Mutation(()=> LoginResponse, {nullable: true})
     @UseGuards(GqlAuthGuard)
-    login(@Args('loginUserInput') loginUserInput: LoginUserInput){
+    @Mutation(()=> LoginResponse, {nullable: true})
+    login(@Args('loginUserInput') loginUserInput: LoginUserInput, @Context() context){
         
-        return this.authService.login(loginUserInput);
-    }
-
-
-    
+        return this.authService.login(context.user);
+    }    
 }
