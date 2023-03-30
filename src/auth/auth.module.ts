@@ -16,6 +16,7 @@ import { JwtStrategy } from './jwt.strategy';
     secret: 'hide-me', 
   }), 
   ],
-  providers: [AuthService, AuthResolver, LocalStrategy, JwtStrategy],
+  providers: [AuthService, AuthResolver, LocalStrategy, JwtStrategy], //h
 })
 export class AuthModule {}
+
