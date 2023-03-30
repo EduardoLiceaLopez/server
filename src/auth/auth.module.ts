@@ -5,7 +5,7 @@ import { LocalStrategy } from './local.strategy';
 
 import { PassportModule } from '@nestjs/passport'; // duda sin el dist
 import { UserAccessModule } from 'src/user_access/user_access.module';
-import { JwtModule } from '@nestjs/jwt/dist';
+import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from './jwt.strategy';
 
 @Module({
@@ -14,7 +14,8 @@ import { JwtStrategy } from './jwt.strategy';
 
     signOptions: {expiresIn: '60s'},
     secret: 'hide-me', 
-  })],
+  }), 
+  ],
   providers: [AuthService, AuthResolver, LocalStrategy, JwtStrategy],
 })
 export class AuthModule {}
