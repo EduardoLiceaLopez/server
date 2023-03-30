@@ -98,7 +98,6 @@ type User {
 
 type UserAccess {
   id: Int!
-  password: String!
   user: User
   user_id: Int!
   user_name: String!
