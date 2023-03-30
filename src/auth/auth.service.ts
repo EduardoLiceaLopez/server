@@ -24,7 +24,10 @@ export class AuthService {
     async login(userAccess: UserAccess){
        //No hace falta const userAccess = await this.userAccessService.findOne(loginUserInput.user_name);
         return {
-            access_token: this.jwtService.sign({user_name: userAccess.user_name, sub: userAccess.id}),
+            access_token: this.jwtService.sign({
+                user_name: userAccess.user_name,
+                sub: userAccess.id,
+            }),
             userAccess,
         };
 

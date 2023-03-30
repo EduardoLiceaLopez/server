@@ -3,8 +3,9 @@ import { UserAccessService } from './user_access.service';
 import { UserAccess } from './entities/user_access.entity';
 import { CreateUserAccessInput } from './dto/create-user_access.input';
 import { UpdateUserAccessInput } from './dto/update-user_access.input';
-import { NotFoundException } from '@nestjs/common';
+import { NotFoundException, UseGuards } from '@nestjs/common';
 import { User } from 'src/users/user.entity';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
 
 @Resolver(() => UserAccess)
@@ -28,6 +29,13 @@ export class UserAccessResolver {
     @Query((returns)=> UserAccess, {name: 'userAccess'})
     findOne(@Args('user_name') user_name: string){
       return this.userAccessService.findOne(user_name);
+    };
+
+    @Query(()=> [UserAccess], {name: 'usersAccess'})
+    @UseGuards(JwtAuthGuard)
+    findAll(){
+      return this.userAccessService.findAll();
+  
     }
 
 

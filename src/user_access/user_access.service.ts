@@ -1,5 +1,6 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, Query, UseGuards } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { User } from 'src/users/user.entity';
 import { UsersService } from 'src/users/users.service';
 import { FindOneOptions, Repository } from 'typeorm';
@@ -26,6 +27,7 @@ export class UserAccessService {
     return this.userAccessRepository.save(newUserAccess) ;
   };
 
+
   async findAll(): Promise<UserAccess[]> {
 
     const usersAccess = await this.userAccessRepository.find()
@@ -39,10 +41,11 @@ export class UserAccessService {
     
   };
 
+ 
+
   async findOne(user_name: string): Promise<UserAccess| undefined> {
     return this.userAccessRepository.findOneBy({user_name})
     };
-
 
   async update(id: number, updateUserAccess: UpdateUserAccessInput){
 
@@ -81,5 +84,6 @@ export class UserAccessService {
   getUser(user_id: number): Promise<User>{
     return this.usersService.finUserById(user_id);
   };
+
 
 }

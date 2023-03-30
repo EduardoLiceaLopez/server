@@ -6,13 +6,15 @@ import { LocalStrategy } from './local.strategy';
 import { PassportModule } from '@nestjs/passport'; // duda sin el dist
 import { UserAccessModule } from 'src/user_access/user_access.module';
 import { JwtModule } from '@nestjs/jwt/dist';
+import { JwtStrategy } from './jwt.strategy';
 
 @Module({
-  imports: [PassportModule, UserAccessModule, JwtModule.register({
+  imports: [PassportModule, UserAccessModule,
+    JwtModule.register({
 
     signOptions: {expiresIn: '60s'},
     secret: 'hide-me', 
   })],
-  providers: [AuthService, AuthResolver, LocalStrategy],
+  providers: [AuthService, AuthResolver, LocalStrategy, JwtStrategy],
 })
 export class AuthModule {}
