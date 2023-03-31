@@ -1,4 +1,4 @@
-import { Resolver, Query, Mutation, Args, Int, ResolveField, Parent } from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args, Int, ResolveField, Parent, Context } from '@nestjs/graphql';
 import { UserAccessService } from './user_access.service';
 import { UserAccess } from './entities/user_access.entity';
 import { CreateUserAccessInput } from './dto/create-user_access.input';
@@ -31,9 +31,11 @@ export class UserAccessResolver {
       return this.userAccessService.findOne(user_name);
     };
 
+
+
     @Query(()=> [UserAccess], {name: 'usersAccess'})
     @UseGuards(JwtAuthGuard)
-    findAll(){
+    findAll(@Context() context){
       return this.userAccessService.findAll();
   
     }

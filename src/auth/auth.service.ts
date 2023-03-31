@@ -2,6 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { UserAccess } from 'src/user_access/entities/user_access.entity';
 import { UserAccessService } from 'src/user_access/user_access.service';
 import { JwtService } from '@nestjs/jwt';
+import { LoginUserInput } from './dto/login-user.input';
+import { CreateUserAccessInput } from 'src/user_access/dto/create-user_access.input';
 
 @Injectable()
 export class AuthService {
@@ -33,4 +35,38 @@ export class AuthService {
 
     }
 
+
+/*
+    async signup(loginUserInput: LoginUserInput){
+
+        //recomendar buscar por username o id? algo que sea unico (UNIQUE)
+        const userAccess = await this.userAccessService.findOne(loginUserInput.user_name);
+
+        if (userAccess){
+            
+            throw new Error('UserAcces already exists!');
+        }
+        
+        return this.userAccessService.createUserAccess({
+            ...loginUserInput,
+        });
+    }
+
+
+    */
+
+    async signup(signupUserInput: CreateUserAccessInput){
+
+        //recomendar buscar por username o id? algo que sea unico (UNIQUE)
+        const userAccess = await this.userAccessService.findOne(signupUserInput.user_name);
+
+        if (userAccess){
+            
+            throw new Error('UserAcces already exists!');
+        }
+        
+        return this.userAccessService.createUserAccess({
+            ...signupUserInput
+        });
+    }
 }
