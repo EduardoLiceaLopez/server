@@ -6,10 +6,10 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { join } from 'path'; //Puede unir dos directorios
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from './users/user.entity';
 import { UserTypesModule } from './user_types/user_types.module';
 import { UserAccessModule } from './user_access/user_access.module';
 import { AuthModule } from './auth/auth.module';
+
 
 @Module({
   imports: [GraphQLModule.forRoot<ApolloDriverConfig>({
@@ -34,4 +34,5 @@ import { AuthModule } from './auth/auth.module';
   controllers: [AppController],
   providers: [AppService],
 })
+
 export class AppModule {}

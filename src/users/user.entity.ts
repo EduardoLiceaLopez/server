@@ -2,7 +2,7 @@ import { ObjectType, Field, Int } from "@nestjs/graphql";
 
 import { UserAccess } from "src/user_access/entities/user_access.entity";
 import { UserType } from "src/user_types/entities/user_type.entity";
-import { Column, Entity, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 
 @Entity('users')
