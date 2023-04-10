@@ -18,7 +18,10 @@ export class AuthService {
     async validateUserAccess(user_name: string, password: string): Promise <any>{
 
         const userAccess = await this.userAccessService.findOne(user_name);
-        if(userAccess && userAccess.password === password){
+
+        const valid = await bcrypt.compare(password, userAccess?.password);
+
+        if(userAccess && valid){
             const {password, ...result} = userAccess;
             return result;
 
@@ -35,7 +38,6 @@ export class AuthService {
             }),
             userAccess,
         };
-
     }
 
 
@@ -65,10 +67,11 @@ export class AuthService {
             throw new Error('User Acces already exists!');
         }
 
-        
+        const password = await bcrypt.hash(signupUserInput.password, 10);
         
         return this.userAccessService.createUserAccess({
-            ...signupUserInput
+            ...signupUserInput,
+            password,
         });
     }
 }

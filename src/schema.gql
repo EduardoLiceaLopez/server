@@ -42,7 +42,7 @@ type Mutation {
   removeUser(id: Int!): Boolean!
   removeUserAccess(id: Int!): Boolean!
   removeUserType(id: Int!): Boolean!
-  signup(loginUserInput: CreateUserAccessInput!): UserAccess!
+  signup(signupUserInput: CreateUserAccessInput!): UserAccess!
   updateUser(updateUserInput: UpdateUserInput!): User!
   updateUserAccess(updateUserAccess: UpdateUserAccessInput!): UserAccess!
   updateUserType(updateUserTypeInput: UpdateUserTypeInput!): UserType!

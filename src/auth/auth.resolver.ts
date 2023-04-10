@@ -29,7 +29,7 @@ export class AuthResolver {
     */
 
     @Mutation(()=> UserAccess)
-    signup(@Args('loginUserInput') signupUserInput: CreateUserAccessInput){
+    signup(@Args('signupUserInput') signupUserInput: CreateUserAccessInput){
         return this.authService.signup(signupUserInput)
     }
 }

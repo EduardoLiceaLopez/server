@@ -25,6 +25,8 @@ export class UserAccessService {
   createUserAccess(createUserAccessInput: CreateUserAccessInput): Promise<UserAccess> {
     const newUserAccess = this.userAccessRepository.create(createUserAccessInput);
     return this.userAccessRepository.save(newUserAccess) ;
+
+    console.log(newUserAccess);
   };
 
 
