@@ -4,6 +4,9 @@ import { UserAccessService } from 'src/user_access/user_access.service';
 import { JwtService } from '@nestjs/jwt';
 import { LoginUserInput } from './dto/login-user.input';
 import { CreateUserAccessInput } from 'src/user_access/dto/create-user_access.input';
+import * as bcrypt from 'bcrypt';
+
+
 
 @Injectable()
 export class AuthService {
@@ -36,8 +39,7 @@ export class AuthService {
     }
 
 
-/*
-    async signup(loginUserInput: LoginUserInput){
+/* async signup(loginUserInput: LoginUserInput){
 
         //recomendar buscar por username o id? algo que sea unico (UNIQUE)
         const userAccess = await this.userAccessService.findOne(loginUserInput.user_name);
@@ -51,8 +53,6 @@ export class AuthService {
             ...loginUserInput,
         });
     }
-
-
     */
 
     async signup(signupUserInput: CreateUserAccessInput){
@@ -62,8 +62,10 @@ export class AuthService {
 
         if (userAccess){
             
-            throw new Error('UserAcces already exists!');
+            throw new Error('User Acces already exists!');
         }
+
+        
         
         return this.userAccessService.createUserAccess({
             ...signupUserInput
