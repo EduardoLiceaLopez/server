@@ -1,4 +1,4 @@
-import { Query, UseGuards } from '@nestjs/common';
+import { NotFoundException, Query, UseGuards } from '@nestjs/common';
 import { Args, Context, Mutation, Resolver } from '@nestjs/graphql';
 
 import { AuthService } from './auth.service';
@@ -13,12 +13,15 @@ export class AuthResolver {
 
     constructor(private authService: AuthService){}
 
-    @UseGuards(GqlAuthGuard)
+    
+     
+     @UseGuards(GqlAuthGuard)
     @Mutation(()=> LoginResponse, {nullable: true})
     login(@Args('loginUserInput') loginUserInput: LoginUserInput, @Context() context){
         
         return this.authService.login(context.user);
-    }   
+    } 
+     
     
 /*
     @Mutation(()=> UserAccess)
@@ -32,4 +35,5 @@ export class AuthResolver {
     signup(@Args('signupUserInput') signupUserInput: CreateUserAccessInput){
         return this.authService.signup(signupUserInput)
     }
+
 }

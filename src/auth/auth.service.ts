@@ -1,10 +1,11 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { UserAccess } from 'src/user_access/entities/user_access.entity';
 import { UserAccessService } from 'src/user_access/user_access.service';
 import { JwtService } from '@nestjs/jwt';
 import { LoginUserInput } from './dto/login-user.input';
 import { CreateUserAccessInput } from 'src/user_access/dto/create-user_access.input';
 import * as bcrypt from 'bcrypt';
+import { NotFoundError } from 'rxjs';
 
 
 
@@ -19,14 +20,21 @@ export class AuthService {
 
         const userAccess = await this.userAccessService.findOne(user_name);
 
-        const valid = await bcrypt.compare(password, userAccess?.password);
+        if(userAccess){
+            
+            const valid = await bcrypt.compare(password, userAccess?.password);
 
-        if(userAccess && valid){
-            const {password, ...result} = userAccess;
-            return result;
-
+            if(userAccess && valid){
+                const {password, ...result} = userAccess;
+                return result;
+    
+            }
+                return null;
+        } else{
+            throw new NotFoundException(`The user_name is not exist`);
         }
-            return null;
+
+
     }
 
     async login(userAccess: UserAccess){

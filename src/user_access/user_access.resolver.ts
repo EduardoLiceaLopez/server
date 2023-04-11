@@ -33,6 +33,7 @@ export class UserAccessResolver {
 
 
 
+    //Protegido con un guardia, requiere el token de acceso
     @Query(()=> [UserAccess], {name: 'usersAccess'})
     @UseGuards(JwtAuthGuard)
     findAll(@Context() context){
@@ -60,15 +61,22 @@ export class UserAccessResolver {
     };
 
     @ResolveField((returns)=> User)
-    async user(@Parent() userAccess: UserAccess): Promise<User>{
+    async user(@Parent() userAccess: UserAccess): Promise<any>{
     const user = await this.userAccessService.getUser(userAccess.user_id);
       if (!user){
-        throw new NotFoundException;
+
+        throw new NotFoundException('User not found for this user_access');
+
       }else{
 
         return user;
       }
 
     }
+
+
+    /**
+     * 
+     */
 
   }

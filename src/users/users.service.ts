@@ -45,8 +45,10 @@ export class UsersService {
 
         if (user){
             return user;
+
         } else{
-            throw new NotFoundException(`User with ID ${id} not found`);
+
+            throw new NotFoundException(`User with ID ${id} not found, NO LO INTENTES MÁS`);
         }
     };
 
