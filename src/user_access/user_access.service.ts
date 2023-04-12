@@ -71,8 +71,8 @@ export class UserAccessService {
 
 
   //Conexión
-  async getUser(user_id: number): Promise<any>{
-    return this.usersService.finUserById(user_id);
+  async getUser(user_id: number){
+    return this.usersService.findUserById(user_id);
   };
 
 

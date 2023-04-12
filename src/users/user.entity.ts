@@ -53,6 +53,7 @@ import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "ty
        @OneToMany(()=> UserAccess, (userAccess) => userAccess.user)
        @Field(()=> [UserAccess], {nullable: true})
        user_access: UserAccess[];
+       //joinCoun
     }
 
 

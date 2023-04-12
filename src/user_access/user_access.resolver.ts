@@ -27,8 +27,15 @@ export class UserAccessResolver {
     
 
     @Query((returns)=> UserAccess, {name: 'userAccess'})
-    findOne(@Args('user_name') user_name: string){
-      return this.userAccessService.findOne(user_name);
+    async findOne(@Args('user_name') user_name: string){
+
+      const userAccess = await this.userAccessService.findOne(user_name);
+
+      if (userAccess){
+        return userAccess;
+      } else {
+        throw new NotFoundException(`User with username '${user_name}' not fuound`);
+      }
     };
 
 
@@ -61,15 +68,16 @@ export class UserAccessResolver {
     };
 
     @ResolveField((returns)=> User)
-    async user(@Parent() userAccess: UserAccess): Promise<any>{
+    async user(@Parent() userAccess: UserAccess){
     const user = await this.userAccessService.getUser(userAccess.user_id);
-      if (!user){
+    
+      if (user){
 
-        throw new NotFoundException('User not found for this user_access');
+        return user;
 
       }else{
 
-        return user;
+        throw new NotFoundException('User not found for this user_access');
       }
 
     }

@@ -21,7 +21,7 @@ export class UsersResolver {
 
     @Query((returns) => User)
     user(@Args('id', {type: () => Int}) id : number){
-        return this.usersService.finUserById(id);
+        return this.usersService.findUserById(id);
     }
 
   
