@@ -31,7 +31,7 @@ export class AuthService {
             }
                 return null;
         } else{
-            throw new NotFoundException(`The user_name is not exist`);
+            throw new NotFoundException(`The user_name not exist`);
         }
 
 
