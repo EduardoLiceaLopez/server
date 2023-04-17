@@ -27,7 +27,7 @@ import { AuthModule } from './auth/auth.module';
     username: 'root',
     password: 'liceedu12',
     autoLoadEntities: true,
-    synchronize: true, // cambiar a false
+    synchronize: false, // cambiar a false
   })
   ,UsersModule, UserTypesModule, UserAccessModule, AuthModule],
 

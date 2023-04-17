@@ -1,5 +1,4 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { ExceptionsHandler } from '@nestjs/core/exceptions/exceptions-handler';
 import { InjectRepository } from '@nestjs/typeorm/dist';
 import { UserType } from 'src/user_types/entities/user_type.entity';
 import { UserTypesService } from 'src/user_types/user_types.service';
@@ -48,7 +47,7 @@ export class UsersService {
 
         } else{
 
-            throw new NotFoundException(`User with ID ${id} not found, NO LO INTENTES MÁS`);
+            throw new NotFoundException(`User with ID ${id} not found`);
         }
     };
 

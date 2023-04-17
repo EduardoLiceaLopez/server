@@ -15,6 +15,6 @@ export class UserType {
   name:string;
 
   @OneToMany(() => User, (user) => user.user_type)
-  @Field(() => [User], {nullable:  true})
+  @Field(() => [User])
   users: User[];//CAMBIO PE
 }

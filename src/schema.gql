@@ -92,9 +92,9 @@ type User {
   phone_number: String!
   rfc: String!
   userType: UserType!
-  user_access: [UserAccess!]
-  user_type: UserType @deprecated(reason: "This field has been removed and will always return null")
-  user_type_id: Int
+  user_access: [UserAccess!]!
+  user_type: UserType! @deprecated(reason: "This field has been removed and will always return null")
+  user_type_id: Int!
 }
 
 type UserAccess {
@@ -108,5 +108,5 @@ type UserAccess {
 type UserType {
   id: Int!
   name: String!
-  users: [User!]
+  users: [User!]!
 }
