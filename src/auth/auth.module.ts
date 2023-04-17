@@ -14,7 +14,7 @@ import { JwtStrategy } from './jwt.strategy';
     UserAccessModule,
     JwtModule.register({
 
-    signOptions: {expiresIn: '60s'},
+    signOptions: {expiresIn: '3600s'},
     secret: 'hide-me', 
   }), 
   ],

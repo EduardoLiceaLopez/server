@@ -38,7 +38,6 @@ type Mutation {
   createUser(userInput: CreateUserInput!): User!
   createUserAccess(userAccessInput: CreateUserAccessInput!): UserAccess!
   createUserType(createUserTypeInput: CreateUserTypeInput!): UserType!
-  login(loginUserInput: LoginUserInput!): LoginResponse
   removeUser(id: Int!): Boolean!
   removeUserAccess(id: Int!): Boolean!
   removeUserType(id: Int!): Boolean!
@@ -49,6 +48,7 @@ type Mutation {
 }
 
 type Query {
+  login(loginUserInput: LoginUserInput!): LoginResponse
   user(id: Int!): User!
   userAccess(user_name: String!): UserAccess!
   userType(id: Int!): UserType!

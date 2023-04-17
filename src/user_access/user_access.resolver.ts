@@ -48,8 +48,6 @@ export class UserAccessResolver {
   
     }
 
-
-
     @Mutation((returns) => UserAccess)
     createUserAccess(@Args('userAccessInput') userAccessInput: CreateUserAccessInput){
 
