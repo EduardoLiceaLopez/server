@@ -9,6 +9,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserTypesModule } from './user_types/user_types.module';
 import { UserAccessModule } from './user_access/user_access.module';
 import { AuthModule } from './auth/auth.module';
+import { JwtStrategy } from './auth/jwt.strategy';
 
 
 @Module({
@@ -32,7 +33,7 @@ import { AuthModule } from './auth/auth.module';
   ,UsersModule, UserTypesModule, UserAccessModule, AuthModule],
 
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, JwtStrategy],
 })
 
 export class AppModule {}
