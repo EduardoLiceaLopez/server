@@ -6,6 +6,9 @@ import { UpdateUserAccessInput } from './dto/update-user_access.input';
 import { NotFoundException, UseGuards } from '@nestjs/common';
 import { User } from 'src/users/user.entity';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { RolesGuard } from 'src/role/roles.guard';
+import { Roles } from 'src/role/roles.decorator';
+import Role, {  } from 'src/role/role.enum';
 
 
 @Resolver(() => UserAccess)
@@ -43,7 +46,8 @@ export class UserAccessResolver {
     //Protegido con un guardia, requiere el token de acceso
     @Query(()=> [UserAccess], {name: 'usersAccess'})
     @UseGuards(JwtAuthGuard)
-    findAll(@Context() context){
+    //@Roles(Role.USER)
+    findAll(){
       return this.userAccessService.findAll();
   
     }

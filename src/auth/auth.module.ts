@@ -7,6 +7,7 @@ import { PassportModule } from '@nestjs/passport'; // duda sin el dist
 import { UserAccessModule } from 'src/user_access/user_access.module';
 import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from './jwt.strategy';
+import { RolesGuard } from 'src/role/roles.guard';
 
 @Module({
   imports: [
@@ -18,6 +19,6 @@ import { JwtStrategy } from './jwt.strategy';
     secret: 'hide-me', 
   }), 
   ],
-  providers: [AuthService, AuthResolver, LocalStrategy, JwtStrategy],
+  providers: [AuthService, AuthResolver, LocalStrategy, JwtStrategy, RolesGuard],
 })
 export class AuthModule {}
