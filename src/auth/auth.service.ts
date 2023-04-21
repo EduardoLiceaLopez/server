@@ -41,8 +41,9 @@ export class AuthService {
        //No hace falta const userAccess = await this.userAccessService.findOne(loginUserInput.user_name);
         return {
             access_token: this.jwtService.sign({
-                user_role: userAccess.user_role,
-                sub: userAccess.user_name
+                user_name: userAccess.user_name,
+                sub: userAccess.id,
+                role: userAccess.user_role,
             }),
             userAccess,
         };
