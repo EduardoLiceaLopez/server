@@ -7,7 +7,7 @@ import { ForbiddenError } from "apollo-server-express";
 import { ExceptionsHandler } from "@nestjs/core/exceptions/exceptions-handler";
 
 @Injectable()
-export class AdminGuard implements CanActivate {
+export class UserGuard implements CanActivate {
   canActivate(context: ExecutionContext): boolean | Promise<boolean> | Observable<boolean> {
     const ctx = GqlExecutionContext.create(context);
     const token = ctx.getContext().req.headers.authorization?.split(' ')[1];
@@ -17,7 +17,7 @@ export class AdminGuard implements CanActivate {
 
         const decodedToken = jwt.verify(token, 'hide-me') as {role : string};
         ctx.getContext().req.user = {user_role: decodedToken.role};
-        return decodedToken.role.includes('admin');
+        return decodedToken.role.includes('user');
 
       }catch (err){
         throw new ForbiddenException(`Falta el encabezado de autorización. Error: ${err}`);

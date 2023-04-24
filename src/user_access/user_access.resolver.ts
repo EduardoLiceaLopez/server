@@ -7,6 +7,7 @@ import { NotFoundException, UseGuards } from '@nestjs/common';
 import { User } from 'src/users/user.entity';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { AdminGuard } from 'src/Roles/admin.guard';
+import { UserGuard } from 'src/Roles/user.guard';
 
 
 @Resolver(() => UserAccess)
@@ -19,14 +20,13 @@ export class UserAccessResolver {
     ){};
 
     //Funciones
-
+    @UseGuards(AdminGuard)
     @Query((returns)=> [UserAccess])
     usersAccess(){
       return this.userAccessService.findAll();
     };
-
-    
-
+//
+    @UseGuards(UserGuard)
     @Query((returns)=> UserAccess, {name: 'userAccess'})
     async findOne(@Args('user_name') user_name: string){
 
