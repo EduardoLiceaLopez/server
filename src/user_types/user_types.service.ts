@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
+import { InjectEntityManager, InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/users/user.entity';
-import { Repository } from 'typeorm';
+import { EntityManager, Repository } from 'typeorm';
 import { CreateUserTypeInput } from './dto/create-user_type.input';
 import { UpdateUserTypeInput } from './dto/update-user_type.input';
 import { UserType } from './entities/user_type.entity';
@@ -15,6 +15,9 @@ export class UserTypesService {
     
     @InjectRepository(User)
     private userRepository: Repository<User>,
+
+    @InjectEntityManager()
+    private readonly entityManager: EntityManager,
 
   ){};
 
@@ -79,7 +82,30 @@ export class UserTypesService {
     
 
     
-    async deleteUserType(id: number): Promise<boolean>{
+    async deleteUserType(id: number): Promise<any>{
+
+      const userType = await this.userTypeRepository.findOne({
+        where:{
+          id
+        }
+      })
+
+      if (userType){
+
+        await this.entityManager.query('SET FOREIGN_KEY_CHECKS=0');
+        await this.entityManager.delete(UserType, id);
+        await this.entityManager.query('SET FOREIGN_KEY_CHECKS= 1');
+
+      } else{
+        throw new NotFoundException(`There is no user type with the id: ${id}`);
+
+      }
+
+
+
+      
+      
+      /*
       const userType = await this.userTypeRepository.findOne({
         where: {id,}
       })
@@ -91,6 +117,9 @@ export class UserTypesService {
         throw new NotFoundException (`User with ID ${id} not found`);
       }
     }
-    
+    */
+    return { message: `UserType with ID ${id} has been deleted` };
+
+  }
 
 }

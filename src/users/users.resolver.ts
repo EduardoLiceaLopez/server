@@ -21,13 +21,13 @@ export class UsersResolver {
 
     //Indica a GraphQL que será para recuperar datos
     //Mostrar los datos de un usuario
-    //@UseGuards(User_adminGuard)
+    @UseGuards(User_adminGuard)
     @Query((returns)=> [User])
     users(){
         return this.usersService.finAll();
     }
 
-    //@UseGuards(User_adminGuard)
+    @UseGuards(User_adminGuard)
     @Query((returns) => User)
     user(@Args('id', {type: () => Int}) id : number){
         return this.usersService.findUserById(id);
@@ -35,7 +35,7 @@ export class UsersResolver {
 
   
 
-    //@UseGuards(User_adminGuard)
+    @UseGuards(User_adminGuard)
     @ResolveField((returns) => UserType)
     async  userType(@Parent() user: User): Promise<any>{
       const userType = await this.usersService.getUserType(user.user_type_id);
@@ -48,8 +48,9 @@ export class UsersResolver {
             users: [],
           };
         */
-        throw new NotFoundException('Not user type for this user');
+        return { message: 'Not user type for this user' };
         }
+
         return userType;
     };
     
@@ -65,7 +66,7 @@ export class UsersResolver {
     }
 
     */
-    //@UseGuards(User_adminGuard)
+    @UseGuards(User_adminGuard)
     @Mutation((returns) => User)
     async createUser(@Args('userInput') userInput: CreateUserInput){
 
@@ -86,13 +87,13 @@ export class UsersResolver {
 
 
 
-
+  @UseGuards(AdminGuard)
   @Mutation(() => User)
   updateUser(@Args('updateUserInput') updateUserInput: UpdateUserInput) {
     return this.usersService.updateUser(updateUserInput.id, updateUserInput);
   }
 
-  
+  @UseGuards(AdminGuard)
   @Mutation(() => Boolean)
      removeUser(@Args('id', { type: () => Int }) id: number): Promise<boolean> {
     return this.usersService.deleteUser(id);

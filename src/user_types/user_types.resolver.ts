@@ -29,7 +29,7 @@ export class UserTypesResolver {
   }
 
   @Mutation(() => Boolean)
-  removeUserType(@Args('id', { type: () => Int }) id: number): Promise<boolean> {
+  removeUserType(@Args('id', { type: () => Int }) id: number): Promise<any> {
     return this.userTypesService.deleteUserType(id);
   }
   
