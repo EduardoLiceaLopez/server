@@ -12,6 +12,7 @@ export class JwtStrategy extends PassportStrategy(Strategy){
             jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
             ignoreExpiration: false,
             secretOrKey: 'hide-me',
+            sessionStorage: true,
 
         });
     }
@@ -20,7 +21,5 @@ export class JwtStrategy extends PassportStrategy(Strategy){
         return {
             user_id: payload.sub, user_name: payload.user_name, user_role: payload.user_role,
         };
-        //            user_id: payload.sub, 
     }
-
 }

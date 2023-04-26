@@ -8,6 +8,7 @@ import { User } from 'src/users/user.entity';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { AdminGuard } from 'src/Roles/admin.guard';
 import { UserGuard } from 'src/Roles/user.guard';
+import { User_adminGuard } from 'src/Roles/user-admin.guard';
 
 
 @Resolver(() => UserAccess)
@@ -25,7 +26,8 @@ export class UserAccessResolver {
     usersAccess(){
       return this.userAccessService.findAll();
     };
-//
+//  
+    @UseGuards(User_adminGuard)
     @UseGuards(UserGuard)
     @Query((returns)=> UserAccess, {name: 'userAccess'})
     async findOne(@Args('user_name') user_name: string){
@@ -49,23 +51,27 @@ export class UserAccessResolver {
   
     }
 
+    @UseGuards(AdminGuard)
     @Mutation((returns) => UserAccess)
     createUserAccess(@Args('userAccessInput') userAccessInput: CreateUserAccessInput){
 
       return this.userAccessService.createUserAccess(userAccessInput);
     };
 
+    @UseGuards(AdminGuard)
     @Mutation(()=> UserAccess)
     updateUserAccess(@Args('updateUserAccess') updateUserAccess: UpdateUserAccessInput){
       return this.userAccessService.update(updateUserAccess.id, updateUserAccess);
     };
     
+    @UseGuards(AdminGuard)
     @Mutation(()=> Boolean)
     removeUserAccess(@Args('id', {type: () => Int}) id: number): Promise<boolean>{
 
       return this.userAccessService.remove(id);
     };
 
+    
     @ResolveField((returns)=> User)
     async user(@Parent() userAccess: UserAccess){
     const user = await this.userAccessService.getUser(userAccess.user_id);

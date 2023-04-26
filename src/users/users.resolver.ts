@@ -6,6 +6,8 @@ import { UpdateUserInput } from './dto/update-user.input';
 import { User } from './user.entity';
 import { UsersService } from './users.service';
 import { UserTypesService } from 'src/user_types/user_types.service';
+import { AdminGuard } from 'src/Roles/admin.guard';
+import { User_adminGuard } from 'src/Roles/user-admin.guard';
 
 @Resolver((of) => User)
 
@@ -18,11 +20,13 @@ export class UsersResolver {
 
     //Indica a GraphQL que será para recuperar datos
     //Mostrar los datos de un usuario
+    //@UseGuards(User_adminGuard)
     @Query((returns)=> [User])
     users(){
         return this.usersService.finAll();
     }
 
+    //@UseGuards(User_adminGuard)
     @Query((returns) => User)
     user(@Args('id', {type: () => Int}) id : number){
         return this.usersService.findUserById(id);
@@ -30,7 +34,7 @@ export class UsersResolver {
 
   
 
-    
+    //@UseGuards(User_adminGuard)
     @ResolveField((returns) => UserType)
     async  userType(@Parent() user: User): Promise<UserType>{
       const userType = await this.usersService.getUserType(user.user_type_id);
@@ -57,6 +61,7 @@ export class UsersResolver {
     }
 
     */
+    //@UseGuards(User_adminGuard)
     @Mutation((returns) => User)
     async createUser(@Args('userInput') userInput: CreateUserInput){
 

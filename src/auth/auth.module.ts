@@ -16,7 +16,7 @@ import { JwtStrategy } from './jwt.strategy';
     JwtModule.register({
 
     signOptions: {expiresIn: '3600s'},
-    secret: 'hide-me', 
+    secret: 'hide-me',
   }), 
   ],
   providers: [AuthService, AuthResolver, LocalStrategy, JwtStrategy],
