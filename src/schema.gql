@@ -17,7 +17,7 @@ input CreateUserInput {
   name: String!
   phone_number: String!
   rfc: String!
-  user_type_id: Float
+  user_type_id: Int!
 }
 
 input CreateUserTypeInput {
@@ -74,7 +74,7 @@ input UpdateUserInput {
   name: String
   phone_number: String
   rfc: String
-  user_type_id: Float
+  user_type_id: Int
 }
 
 input UpdateUserTypeInput {

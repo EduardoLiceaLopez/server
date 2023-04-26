@@ -54,6 +54,7 @@ export class UserTypesService {
     };
 
     //Borrar 
+    /*
     async deleteUserType(id: number): Promise<boolean>{
 
       const userType = await this.userTypeRepository.findOne({
@@ -74,9 +75,10 @@ export class UserTypesService {
         throw new NotFoundException (`User_Type with ID ${id} not found`);
       }
     };
+    */
     
 
-    /*
+    
     async deleteUserType(id: number): Promise<boolean>{
       const userType = await this.userTypeRepository.findOne({
         where: {id,}
@@ -89,6 +91,6 @@ export class UserTypesService {
         throw new NotFoundException (`User with ID ${id} not found`);
       }
     }
-    */
+    
 
 }
