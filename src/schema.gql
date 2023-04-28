@@ -40,7 +40,7 @@ type Mutation {
   createUserType(createUserTypeInput: CreateUserTypeInput!): UserType!
   removeUser(id: Int!): Boolean!
   removeUserAccess(id: Int!): Boolean!
-  removeUserType(id: Int!): Boolean!
+  removeUserType(id: Int!): UserType!
   signup(signupUserInput: CreateUserAccessInput!): UserAccess!
   updateUser(updateUserInput: UpdateUserInput!): User!
   updateUserAccess(updateUserAccess: UpdateUserAccessInput!): UserAccess!
@@ -93,8 +93,8 @@ type User {
   rfc: String!
   userType: UserType!
   user_access: [UserAccess!]!
-  user_type: UserType! @deprecated(reason: "This field has been removed and will always return null")
-  user_type_id: Int!
+  user_type: UserType
+  user_type_id: Int
 }
 
 type UserAccess {
@@ -106,7 +106,7 @@ type UserAccess {
 }
 
 type UserType {
-  id: Int!
-  name: String!
-  users: [User!]!
+  id: Int
+  name: String
+  users: [User!]
 }

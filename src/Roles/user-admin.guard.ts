@@ -18,7 +18,7 @@ export class User_adminGuard implements CanActivate {
         return decodedToken.role.includes('admin') || decodedToken.role.includes('user');
 
       }catch (err){
-        throw new ForbiddenException(`Falta el encabezado de autorización. Error: ${err}`);
+        throw new ForbiddenException(`Error: ${err}`);
       }
 
     }else{

@@ -19,8 +19,6 @@ export class UsersResolver {
         private userTypesService: UserTypesService,
       ){}
 
-    //Indica a GraphQL que será para recuperar datos
-    //Mostrar los datos de un usuario
     @UseGuards(User_adminGuard)
     @Query((returns)=> [User])
     users(){
@@ -39,33 +37,18 @@ export class UsersResolver {
     @ResolveField((returns) => UserType)
     async  userType(@Parent() user: User): Promise<any>{
       const userType = await this.usersService.getUserType(user.user_type_id);
-        //return this.usersService.getUserType(user.user_type_id)
-        if (!userType){
         
-        /*  return{
+      if(!userType){
+          return{
             id: parseInt('0', 10),
-            name: 'Not Avalible user_type for this user',
+            name: 'user_type for this user has be eliminated',
             users: [],
           };
-        */
-        return { message: 'Not user type for this user' };
+        
         }
-
         return userType;
     };
     
-   
-
-
-    //Indica a GraphQl que tomará datos
-    /*
-    @Mutation((returns) => User)
-    createUser(@Args('userInput') userInput: CreateUserInput){
-
-        return this.usersService.createUser(userInput);
-    }
-
-    */
     @UseGuards(User_adminGuard)
     @Mutation((returns) => User)
     async createUser(@Args('userInput') userInput: CreateUserInput){
@@ -73,31 +56,23 @@ export class UsersResolver {
         const userTypes = await  this.userTypesService.findOne(userInput.user_type_id);
 
         if (userTypes){
-
           return  this.usersService.createUser(userInput);
-
         } else{
-
           throw new NotFoundException(`Error, couldn't associate this new user with the user type ${userInput.user_type_id} because it doesn't exist`);
         }
-      
-
-
     }
 
+    @UseGuards(AdminGuard)
+    @Mutation(() => User)
+    updateUser(@Args('updateUserInput') updateUserInput: UpdateUserInput) {
+      return this.usersService.updateUser(updateUserInput.id, updateUserInput);
+    }
 
-
-  @UseGuards(AdminGuard)
-  @Mutation(() => User)
-  updateUser(@Args('updateUserInput') updateUserInput: UpdateUserInput) {
-    return this.usersService.updateUser(updateUserInput.id, updateUserInput);
-  }
-
-  @UseGuards(AdminGuard)
-  @Mutation(() => Boolean)
-     removeUser(@Args('id', { type: () => Int }) id: number): Promise<boolean> {
-    return this.usersService.deleteUser(id);
-  }
+    @UseGuards(AdminGuard)
+    @Mutation(() => Boolean)
+      removeUser(@Args('id', { type: () => Int }) id: number): Promise<boolean> {
+      return this.usersService.deleteUser(id);
+    }
   
 
 

@@ -19,21 +19,9 @@ export class UsersService {
 
     ){};
 
-
-    /**
-     * 
-     * 
-     * @returns  una repositorio de una entidad (tabla en mysql)
-     * Muestra todos los usuarios
-     */
     async finAll(): Promise<User[]> {
-
        return this.userRepository.find()
     }
-    /**
-     * 
-     * 
-     */
 
     async findUserById(id : number): Promise<User>{
         const user = await this.userRepository.findOne({
@@ -41,65 +29,51 @@ export class UsersService {
                 id,
             }
         })
-
         if (user){
             return user;
-
         } else{
-
             throw new NotFoundException(`User with ID ${id} not found`);
         }
     };
-
-    /**
-     * 
-     *
-     */
     createUser(users: CreateUserInput): Promise<User>{
         const newUser = this.userRepository.create(users);
         return this.userRepository.save(newUser);//Correción
         
     }
 
-    //Conexión con servicio de UserType para encontrar el el typo
-    //de usuario desde user
-    getUserType(user_type_id: number): Promise<UserType>{
+    async getUserType(user_type_id: number): Promise<any>{
+
+        const userType = await this.usersTypeService.findOne(user_type_id)
+
+        if(!userType){
+            return null;
+        }
         return this.usersTypeService.findOne(user_type_id)
     };
 
-//
     async updateUser(id: number, updateUserInput: UpdateUserInput){
 
         const user = await this.userRepository.findOne({
             where: {id,
             }
         })
-
         if(user){ 
         await this.userRepository.update(id, updateUserInput);
         return this.userRepository.findOneBy({id: id});
-
         } else{
             throw new NotFoundException (`User with ID ${id} not found`);
         }
       };
 
-
        async deleteUser(id: number): Promise<boolean>{
-
         const user = await this.userRepository.findOne({
             where:{id}
         })
-
         if (user){
             const result = await this.userRepository.delete(id);
             return result.affected !== 0;
         }else{
             throw new NotFoundException (`User with ID ${id} not found`);
         }
-
       };
-
-
-
 }

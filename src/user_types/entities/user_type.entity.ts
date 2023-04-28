@@ -7,14 +7,14 @@ import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 export class UserType {
 
   @PrimaryGeneratedColumn()
-  @Field(type => Int)
+  @Field(type => Int, {nullable: true})
   id: number;
 
   @Column()
-  @Field()
+  @Field({nullable: true})
   name:string;
 
   @OneToMany(() => User, (user) => user.user_type)
-  @Field(() => [User])
+  @Field(() => [User], {nullable: true})
   users: User[];//CAMBIO PE
 }

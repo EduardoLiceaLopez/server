@@ -48,13 +48,14 @@ import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColum
         @ManyToOne(() => UserType, (userType) => userType.users)
         //@Field(()=> UserType, { nullable: true })
         @JoinColumn({name: 'user_type_id'})
-        @Field({deprecationReason: 'This field has been removed and will always return null' })
+        @Field()
         user_type?: UserType;
 
        @OneToMany(()=> UserAccess, (userAccess) => userAccess.user)
        @Field(()=> [UserAccess])
        user_access: UserAccess[];
        //joinCoun
+       //
     }
 
 

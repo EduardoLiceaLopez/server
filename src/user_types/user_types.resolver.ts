@@ -3,6 +3,7 @@ import { UserTypesService } from './user_types.service';
 import { UserType } from './entities/user_type.entity';
 import { CreateUserTypeInput } from './dto/create-user_type.input';
 import { UpdateUserTypeInput } from './dto/update-user_type.input';
+import { Any } from 'typeorm';
 
 @Resolver(() => UserType)
 export class UserTypesResolver {
@@ -28,7 +29,7 @@ export class UserTypesResolver {
     return this.userTypesService.updateUserType(updateUserTypeInput.id, updateUserTypeInput);
   }
 
-  @Mutation(() => Boolean)
+  @Mutation(() => UserType)
   removeUserType(@Args('id', { type: () => Int }) id: number): Promise<any> {
     return this.userTypesService.deleteUserType(id);
   }
