@@ -73,7 +73,7 @@ export class AuthService {
 
         if (userAccess){
             
-            throw new Error('User Acces already exists!');
+            throw new Error('User Access already exists!');
         }
 
         const password = await bcrypt.hash(signupUserInput.password, 10);
