@@ -66,7 +66,7 @@ export class AuthService {
     }
     */
 
-    async signup(signupUserInput: CreateUserAccessInput){
+    async newUserAccess(signupUserInput: CreateUserAccessInput){
 
         //recomendar buscar por username o id? algo que sea unico (UNIQUE)
         const userAccess = await this.userAccessService.findOne(signupUserInput.user_name);

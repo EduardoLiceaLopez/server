@@ -38,10 +38,10 @@ type Mutation {
   createUser(userInput: CreateUserInput!): User!
   createUserAccess(userAccessInput: CreateUserAccessInput!): UserAccess!
   createUserType(createUserTypeInput: CreateUserTypeInput!): UserType!
+  newUserAcces(signupUserInput: CreateUserAccessInput!): UserAccess!
   removeUser(id: Int!): Boolean!
   removeUserAccess(id: Int!): Boolean!
   removeUserType(id: Int!): UserType!
-  signup(signupUserInput: CreateUserAccessInput!): UserAccess!
   updateUser(updateUserInput: UpdateUserInput!): User!
   updateUserAccess(updateUserAccess: UpdateUserAccessInput!): UserAccess!
   updateUserType(updateUserTypeInput: UpdateUserTypeInput!): UserType!
@@ -93,8 +93,8 @@ type User {
   rfc: String!
   userType: UserType!
   user_access: [UserAccess!]!
-  user_type: UserType
-  user_type_id: Int
+  user_type: UserType!
+  user_type_id: Int!
 }
 
 type UserAccess {

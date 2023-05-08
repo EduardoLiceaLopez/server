@@ -1,10 +1,8 @@
-import { BadRequestException, CanActivate, ExecutionContext, ForbiddenException, HttpException, HttpStatus, Injectable } from "@nestjs/common";
-import { Reflector } from "@nestjs/core";
+import { CanActivate, ExecutionContext, ForbiddenException, Injectable } from "@nestjs/common";
 import { Observable } from "rxjs";
 import * as jwt from 'jsonwebtoken';
 import { GqlExecutionContext } from "@nestjs/graphql";
-import { ForbiddenError } from "apollo-server-express";
-import { ExceptionsHandler } from "@nestjs/core/exceptions/exceptions-handler";
+
 
 @Injectable()
 export class AdminGuard implements CanActivate {
@@ -20,7 +18,8 @@ export class AdminGuard implements CanActivate {
         return decodedToken.role.includes('admin');
 
       }catch (err){
-        throw new ForbiddenException(`Falta el encabezado de autorización. Error: ${err}`);
+        
+        throw new ForbiddenException(`Error: ${err}`);
       }
 
     }else{
