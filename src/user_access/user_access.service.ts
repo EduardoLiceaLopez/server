@@ -40,32 +40,32 @@ export class UserAccessService {
     return this.userAccessRepository.findOneBy({user_name})
     };
 
-  async update(id: number, updateUserAccess: UpdateUserAccessInput){
+  async update(user_id: number, updateUserAccess: UpdateUserAccessInput){
     const userAccess = await this.userAccessRepository.findOne({
       where: {
-        id,
+        user_id,
       }
     })
     if (userAccess){
-      await this.userAccessRepository.update(id, updateUserAccess);
-      return this.userAccessRepository.findOneBy({id:id});
+      await this.userAccessRepository.update(user_id, updateUserAccess);
+      return this.userAccessRepository.findOneBy({user_id:user_id});
     } else {
-      throw new NotFoundException(`User with ID ${id} not found`);
+      throw new NotFoundException(`User with ID ${user_id} not found`);
     }
   };
 
-  async remove(id: number): Promise<boolean> {
+  async remove(user_id: number): Promise<boolean> {
     const userAccess = await this.userAccessRepository.findOne({
       where:{
-        id,
+        user_id,
       }
     })
     if (userAccess){
 
-      const result = await this.userAccessRepository.delete(id);
+      const result = await this.userAccessRepository.delete(user_id);
       return result.affected !==0;
     }else{
-      throw new NotFoundException(`User with ID ${id} not found`)
+      throw new NotFoundException(`User with ID ${user_id} not found`)
     };
   };
 

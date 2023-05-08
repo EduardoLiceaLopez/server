@@ -1,15 +1,17 @@
 import { InputType, Int, Field } from '@nestjs/graphql';
-import { IsNotEmpty, MinLength } from 'class-validator';
+import { IsNotEmpty } from 'class-validator';
 
 
 @InputType()
 export class CreateUserAccessInput {
+
+  @IsNotEmpty()
+  @Field(()=> Int)
+  user_id: number;
+
   @IsNotEmpty()
   @Field()
   user_name: string;
-
-  @Field(()=> Int)
-  user_id: number;
 
   @Field()
  // @MinLength(8, {message: 'The password requiered min 8 characters'})

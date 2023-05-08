@@ -8,7 +8,7 @@ import { UsersService } from './users.service';
 import { UserTypesService } from 'src/user_types/user_types.service';
 import { AdminGuard } from 'src/Roles/admin.guard';
 import { User_adminGuard } from 'src/Roles/user-admin.guard';
-import { ExceptionsHandler } from '@nestjs/core/exceptions/exceptions-handler';
+;
 
 @Resolver((of) => User)
 

@@ -1,3 +1,8 @@
+CREATE DATABASE sgi_db;
+
+USE sgi_db;
+
+
 CREATE TABLE user_types(
 	id INT PRIMARY KEY auto_increment,
 	name VARCHAR(50) NOT NULL
@@ -18,17 +23,6 @@ CREATE TABLE users(
 	FOREIGN KEY (user_type_id) REFERENCES user_types(id) ON DELETE CASCADE
 );
 
-CREATE TABLE user_access(
-
-	id INT PRIMARY KEY auto_increment,
-	user_id INT NOT NULL,
-	user_name VARCHAR(25) NOT NULL,
-	password VARCHAR(150) NOT NULL,
-	user_role VARCHAR(40) NOT NULL,
-
-	FOREIGN KEY (user_id) REFERENCES users(id)
-);
-
 CREATE TABLE permissions(
 	id INT PRIMARY KEY auto_increment,
 	action VARCHAR(100) NOT NULL,
@@ -36,7 +30,27 @@ CREATE TABLE permissions(
 	name VARCHAR(70) NOT NULL
 );
 
+CREATE TABLE roles(
+	id INT PRIMARY KEY auto_increment,
+	name VARCHAR (25) NOT NULL,
+	description VARCHAR(150)
+);
 
+CREATE TABLE roles_permissions(
+	user_id INT PRIMARY KEY,
+	role_id INT NOT NULL,
+	active TINYINT(1) DEFAULT 1
+);
+
+
+CREATE TABLE user_access(
+	user_id INT PRIMARY KEY,
+	user_name VARCHAR(25) NOT NULL,
+	password VARCHAR(150) NOT NULL,
+	user_role VARCHAR(40) NOT NULL,
+
+	FOREIGN KEY (user_id) REFERENCES users(id)
+);
 
 
 CREATE TABLE base(

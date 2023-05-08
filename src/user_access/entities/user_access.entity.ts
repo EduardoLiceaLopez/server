@@ -1,24 +1,25 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
 import { User } from 'src/users/user.entity';
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { BeforeInsert, Column, Entity, JoinColumn, OneToOne, PrimaryColumn, } from 'typeorm';
 
 @Entity('user_access')
 @ObjectType()
 
 
 export class UserAccess {
-  @PrimaryGeneratedColumn()
-  @Field(()=> Int)
-  id: number;
 
-  @ManyToOne(() => User, (user) => user.user_access)
+
+  @PrimaryColumn()
+  @Field(()=> Int)
+  user_id: number;
+
+  @OneToOne(()=> User, { cascade: true})
   @JoinColumn({name: 'user_id'})
   @Field(()=> User, {nullable: true})
   user?: User;
 
-  @Column()
-  @Field(()=> Int)
-  user_id: number;
+  @BeforeInsert()
+  newid() {this.user_id = this.user.id; }
 
   @Column()
   @Field(()=> String)
