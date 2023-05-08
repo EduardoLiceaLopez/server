@@ -58,9 +58,8 @@ type Query {
 }
 
 input UpdateUserAccessInput {
-  id: Int!
   password: String
-  user_id: Int
+  user_id: Int!
   user_name: String
   user_role: String
 }
@@ -98,7 +97,6 @@ type User {
 }
 
 type UserAccess {
-  id: Int!
   user: User
   user_id: Int!
   user_name: String!
