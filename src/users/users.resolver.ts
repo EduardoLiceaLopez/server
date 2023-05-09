@@ -19,7 +19,6 @@ export class UsersResolver {
         private userTypesService: UserTypesService,
       ){}
 
-    @UseGuards(User_adminGuard)
     @Query((returns)=> [User])
     users(){
         return this.usersService.finAll();
@@ -48,8 +47,7 @@ export class UsersResolver {
         }
         return userType;
     };
-    
-    @UseGuards(User_adminGuard)
+
     @Mutation((returns) => User)
     async createUser(@Args('userInput') userInput: CreateUserInput){
 
@@ -62,7 +60,6 @@ export class UsersResolver {
         }
     }
 
-    @UseGuards(AdminGuard)
     @Mutation(() => User)
     updateUser(@Args('updateUserInput') updateUserInput: UpdateUserInput) {
       return this.usersService.updateUser(updateUserInput.id, updateUserInput);

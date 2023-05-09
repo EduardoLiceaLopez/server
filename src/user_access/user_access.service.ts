@@ -1,9 +1,7 @@
-import { Injectable, NotFoundException, Query, UseGuards } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
-import { User } from 'src/users/user.entity';
 import { UsersService } from 'src/users/users.service';
-import { FindOneOptions, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { CreateUserAccessInput } from './dto/create-user_access.input';
 import { UpdateUserAccessInput } from './dto/update-user_access.input';
 import { UserAccess } from './entities/user_access.entity';
@@ -22,9 +20,21 @@ export class UserAccessService {
       ){};
 
   //Funciones
-  createUserAccess(createUserAccessInput: CreateUserAccessInput): Promise<UserAccess> {
-    const newUserAccess = this.userAccessRepository.create(createUserAccessInput);
-    return this.userAccessRepository.save(newUserAccess) ;
+  async createUserAccess(createUserAccessInput: CreateUserAccessInput): Promise<UserAccess> {
+    const userId = createUserAccessInput.user_id;
+    const newUserAccess = await this.userAccessRepository.findOneBy({user_id: userId})
+
+    if (newUserAccess){
+
+       this.userAccessRepository.create(createUserAccessInput);
+       return this.userAccessRepository.save(newUserAccess) ;
+    } else{
+      throw new NotFoundException('No one user asociated whit this ID')
+    }
+
+
+
+    
   };
 
   async findAll(): Promise<UserAccess[]> {
@@ -40,32 +50,32 @@ export class UserAccessService {
     return this.userAccessRepository.findOneBy({user_name})
     };
 
-  async update(id: number, updateUserAccess: UpdateUserAccessInput){
+  async update(user_id: number, updateUserAccess: UpdateUserAccessInput){
     const userAccess = await this.userAccessRepository.findOne({
       where: {
-        id,
+        user_id,
       }
     })
     if (userAccess){
-      await this.userAccessRepository.update(id, updateUserAccess);
-      return this.userAccessRepository.findOneBy({id:id});
+      await this.userAccessRepository.update(user_id, updateUserAccess);
+      return this.userAccessRepository.findOneBy({user_id: user_id});
     } else {
-      throw new NotFoundException(`User with ID ${id} not found`);
+      throw new NotFoundException(`User with ID ${user_id} not found`);
     }
   };
 
-  async remove(id: number): Promise<boolean> {
+  async remove(user_id: number): Promise<boolean> {
     const userAccess = await this.userAccessRepository.findOne({
       where:{
-        id,
+        user_id,
       }
     })
     if (userAccess){
 
-      const result = await this.userAccessRepository.delete(id);
+      const result = await this.userAccessRepository.delete(user_id);
       return result.affected !==0;
     }else{
-      throw new NotFoundException(`User with ID ${id} not found`)
+      throw new NotFoundException(`User with ID ${user_id} not found`)
     };
   };
 
