@@ -1,11 +1,11 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { UserAccess } from 'src/user_access/entities/user_access.entity';
 import { UserAccessService } from 'src/user_access/user_access.service';
 import { JwtService } from '@nestjs/jwt';
 import { LoginUserInput } from './dto/login-user.input';
 import { CreateUserAccessInput } from 'src/user_access/dto/create-user_access.input';
 import * as bcrypt from 'bcrypt';
-import { NotFoundError } from 'rxjs';
+
 
 
 
@@ -42,7 +42,7 @@ export class AuthService {
         return {
             access_token: this.jwtService.sign({
                 user_name: userAccess.user_name,
-                sub: userAccess.id,
+                sub: userAccess.user_id,
                 role: userAccess.user_role,
             }),
             userAccess,
@@ -73,7 +73,7 @@ export class AuthService {
 
         if (userAccess){
             
-            throw new Error('User Acces already exists!');
+            throw new ConflictException('User Acces already exists!');
         }
 
         const password = await bcrypt.hash(signupUserInput.password, 10);

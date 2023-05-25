@@ -5,7 +5,6 @@ import { CreateUserAccessInput } from './dto/create-user_access.input';
 import { UpdateUserAccessInput } from './dto/update-user_access.input';
 import { NotFoundException, UseGuards } from '@nestjs/common';
 import { User } from 'src/users/user.entity';
-import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { AdminGuard } from 'src/Roles/admin.guard';
 import { UserGuard } from 'src/Roles/user.guard';
 import { User_adminGuard } from 'src/Roles/user-admin.guard';
