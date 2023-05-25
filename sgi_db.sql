@@ -19,13 +19,11 @@ CREATE TABLE users(
 );
 
 CREATE TABLE user_access(
-
 	id INT PRIMARY KEY auto_increment,
 	user_id INT NOT NULL,
 	user_name VARCHAR(25) NOT NULL,
 	password VARCHAR(150) NOT NULL,
 	user_role VARCHAR(40) NOT NULL,
-
 	FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
@@ -219,4 +217,36 @@ CREATE TABLE user_resources(
  FOREIGN KEY(user_id) REFERENCES users(id),
  FOREIGN KEY (resource_id) REFERENCES resources(id),
  FOREIGN KEY (user_location_id) REFERENCES user_locations(id)
+);
+
+
+CREATE TABLE permissions(
+
+	id INT PRIMARY KEY auto_increment,
+	action VARCHAR(75) NOT NULL,
+	description VARCHAR(250),
+	name VARCHAR(50)
+);
+
+CREATE TABLE roles(
+	id INT PRIMARY KEY auto_increment,
+	name VARCHAR(50) NOT NULL,
+	description VARCHAR(200)
+);
+
+CREATE TABLE roles_perm(
+	permission_id INT NOT NULL,
+	role_id INT NOT NULL,
+	active TINYINT(1) DEFAULT 1,
+
+	FOREIGN KEY (permission_id) REFERENCES permissions(id),
+	FOREIGN KEY (role_id) REFERENCES roles(id)
+);
+
+CREATE TABLE user_roles(
+	user_id INT NOT NULL,
+	role_id INT NOT NULL,
+
+	FOREIGN KEY (user_id) REFERENCES users(id),
+	FOREIGN KEY (role_id) REFERENCES roles(id)
 );

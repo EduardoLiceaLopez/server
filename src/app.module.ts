@@ -10,6 +10,10 @@ import { UserTypesModule } from './user_types/user_types.module';
 import { UserAccessModule } from './user_access/user_access.module';
 import { AuthModule } from './auth/auth.module';
 import { JwtStrategy } from './auth/jwt.strategy';
+import { RolePermModule } from './role_perm/role_perm.module';
+import { UserRoleModule } from './user_role/user_role.module';
+import { PermissionsModule } from './permissions/permissions.module';
+import { RolesModule } from './roles/roles.module';
 
 
 @Module({
@@ -30,7 +34,7 @@ import { JwtStrategy } from './auth/jwt.strategy';
     autoLoadEntities: true,
     synchronize: false, // cambiar a false
   })
-  ,UsersModule, UserTypesModule, UserAccessModule, AuthModule],
+  ,UsersModule, UserTypesModule, UserAccessModule, AuthModule, PermissionsModule, RolePermModule, UserRoleModule, RolesModule],
 
   controllers: [AppController],
   providers: [AppService, JwtStrategy],
