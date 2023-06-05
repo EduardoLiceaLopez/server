@@ -2,6 +2,21 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+input CreatePermissionInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input CreateRoleInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input CreateRolePermInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
 input CreateUserAccessInput {
   password: String!
   user_id: Int!
@@ -20,6 +35,11 @@ input CreateUserInput {
   user_type_id: Int!
 }
 
+input CreateUserRoleInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
 input CreateUserTypeInput {
   name: String!
 }
@@ -35,26 +55,87 @@ input LoginUserInput {
 }
 
 type Mutation {
+  createPermission(createPermissionInput: CreatePermissionInput!): Permission!
+  createRole(createRoleInput: CreateRoleInput!): Role!
+  createRolePerm(createRolePermInput: CreateRolePermInput!): RolePerm!
   createUser(userInput: CreateUserInput!): User!
   createUserAccess(userAccessInput: CreateUserAccessInput!): UserAccess!
+  createUserRole(createUserRoleInput: CreateUserRoleInput!): UserRole!
   createUserType(createUserTypeInput: CreateUserTypeInput!): UserType!
   newUserAcces(signupUserInput: CreateUserAccessInput!): UserAccess!
+  removePermission(id: Int!): Permission!
+  removeRole(id: Int!): Role!
+  removeRolePerm(id: Int!): RolePerm!
   removeUser(id: Int!): Boolean!
   removeUserAccess(id: Int!): Boolean!
+  removeUserRole(id: Int!): UserRole!
   removeUserType(id: Int!): UserType!
+  updatePermission(updatePermissionInput: UpdatePermissionInput!): Permission!
+  updateRole(updateRoleInput: UpdateRoleInput!): Role!
+  updateRolePerm(updateRolePermInput: UpdateRolePermInput!): RolePerm!
   updateUser(updateUserInput: UpdateUserInput!): User!
   updateUserAccess(updateUserAccess: UpdateUserAccessInput!): UserAccess!
+  updateUserRole(updateUserRoleInput: UpdateUserRoleInput!): UserRole!
   updateUserType(updateUserTypeInput: UpdateUserTypeInput!): UserType!
+}
+
+type Permission {
+  action: String!
+  description: String!
+
+  """Example field (placeholder)"""
+  id: Int!
+  name: String!
+  role_perm: RolePerm!
 }
 
 type Query {
   login(loginUserInput: LoginUserInput!): LoginResponse
+  permission(id: Int!): Permission!
+  permissions: [Permission!]!
+  role(id: Int!): Role!
+  rolePerm(id: Int!): RolePerm!
+  roles: [Role!]!
   user(id: Int!): User!
   userAccess(user_name: String!): UserAccess!
+  userRole(id: Int!): UserRole!
   userType(id: Int!): UserType!
   userTypes: [UserType!]!
   users: [User!]!
   usersAccess: [UserAccess!]!
+}
+
+type Role {
+  description: String!
+  id: Int!
+  name: String!
+  role_perm: [RolePerm!]!
+  user_role: [UserRole!]!
+}
+
+type RolePerm {
+  active: Boolean!
+  id: Int!
+  permission_id: Int!
+  role_id: Int!
+}
+
+input UpdatePermissionInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}
+
+input UpdateRoleInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}
+
+input UpdateRolePermInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
 }
 
 input UpdateUserAccessInput {
@@ -77,6 +158,12 @@ input UpdateUserInput {
   user_type_id: Int
 }
 
+input UpdateUserRoleInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}
+
 input UpdateUserTypeInput {
   id: Int!
   name: String
@@ -93,6 +180,7 @@ type User {
   rfc: String!
   userType: UserType!
   user_access: [UserAccess!]!
+  user_role: [UserRole!]!
   user_type: UserType!
   user_type_id: Int!
 }
@@ -102,6 +190,14 @@ type UserAccess {
   user_id: Int!
   user_name: String!
   user_role: String!
+}
+
+type UserRole {
+  id: Int!
+  role: Role!
+  role_id: Int!
+  user: User!
+  user_id: Int!
 }
 
 type UserType {

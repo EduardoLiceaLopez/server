@@ -9,4 +9,5 @@ export class LoginResponse{
 
     @Field(()=> UserAccess)
     userAccess: UserAccess;
+    
 }

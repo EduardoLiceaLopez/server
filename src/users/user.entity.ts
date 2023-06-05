@@ -1,6 +1,7 @@
 import { ObjectType, Field, Int } from "@nestjs/graphql";
 
 import { UserAccess } from "src/user_access/entities/user_access.entity";
+import { UserRole } from "src/user_role/entities/user_role.entity";
 import { UserType } from "src/user_types/entities/user_type.entity";
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
@@ -56,6 +57,12 @@ import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColum
        user_access: UserAccess[];
        //joinCoun
        //
+
+
+       //Coneccion con la tabla que reune los roles con los permisos
+       @OneToMany(()=> UserRole, (userRole)=> userRole.user)
+       @Field(()=> [UserRole])
+       user_role: UserRole[];
     }
 
 
