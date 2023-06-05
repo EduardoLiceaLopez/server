@@ -1,6 +1,6 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
 import { RolePerm } from 'src/role_perm/entities/role_perm.entity';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 
 //Esta  entidad describe los permisos de cada Role
@@ -25,7 +25,9 @@ export class Permission {
   @Field(()=> String)
   name: string;
 
-  @Field(()=> RolePerm)
-  role_perm: [RolePerm];
+  @OneToMany(()=> RolePerm, (rolePerm)=> rolePerm.permission)
+  @Field(()=> [RolePerm])
+  role_perm: RolePerm[];
+
 
 }

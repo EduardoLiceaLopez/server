@@ -4,6 +4,8 @@ import { UpdateRolePermInput } from './dto/update-role_perm.input';
 import { RolePerm } from './entities/role_perm.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { Role } from 'src/roles/entities/role.entity';
+import { Permission } from 'src/permissions/entities/permission.entity';
 
 @Injectable()
 export class RolePermService {
@@ -11,12 +13,44 @@ export class RolePermService {
   constructor(
     @InjectRepository(RolePerm)
     private rolePermRepository: Repository<RolePerm>,
+
+
+    @InjectRepository(Role)
+    private roleRepository: Repository<Role>,
+
+    @InjectRepository(Permission)
+    private permRepository: Repository<Permission>
   ){}
 
   create(createRolePermInput: CreateRolePermInput) {
     const role_perm = this.rolePermRepository.create(createRolePermInput);
     return this.rolePermRepository.save(role_perm);
   }
+
+  /**
+   * 
+   * Inicia seccion que recupera los roles y los permisos
+   */
+
+  //Recupera al permiso
+  async getPermission(permission_id: number): Promise<any>{
+    const permission = await this.permRepository.findOneBy({id: permission_id})
+
+    if(!permission){
+        return null;
+    }
+    return permission;
+};
+
+//Recupera al role
+async getRole(role_id: number): Promise<any>{
+  const role = await this.roleRepository.findOneBy({id: role_id})
+  if(!role){
+      return null;
+  }
+  return role;
+};
+  //Fin de la seccion de recuperacion de entidades
 
   findAll() {
     return `This action returns all rolePerm`;

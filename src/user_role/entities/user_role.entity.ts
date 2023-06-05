@@ -34,7 +34,5 @@ export class UserRole {
   @JoinColumn({name: 'role_id'})
   @Field(()=> Role)
   role: Role;
-
-
   //LLaves foraneas
 }

@@ -1,8 +1,11 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args, Int, ResolveField, Parent} from '@nestjs/graphql';
 import { RolePermService } from './role_perm.service';
 import { RolePerm } from './entities/role_perm.entity';
 import { CreateRolePermInput } from './dto/create-role_perm.input';
 import { UpdateRolePermInput } from './dto/update-role_perm.input';
+import { Permission } from 'src/permissions/entities/permission.entity';
+import { ConflictException } from '@nestjs/common';
+import { Role } from 'src/roles/entities/role.entity';
 
 @Resolver(() => RolePerm)
 export class RolePermResolver {
@@ -12,6 +15,34 @@ export class RolePermResolver {
   createRolePerm(@Args('createRolePermInput') createRolePermInput: CreateRolePermInput) {
     return this.rolePermService.create(createRolePermInput);
   }
+
+  /**
+   * 
+   * Sección que recupera a las entidades asociadas (Role & Permission)
+   */
+    //Recupera el usuario asociado
+    @ResolveField((returns) => Permission)
+    async permission(@Parent() rolePerm: RolePerm): Promise<any>{
+      const permission = await this.rolePermService.getPermission(rolePerm.permission_id);
+        
+      if(!permission){
+        throw new ConflictException("Not user for this user_role")
+        }
+        return permission;
+    };
+  
+    //Recupera el role asociado
+    @ResolveField((returns) => Role)
+    async role(@Parent() role_perm: RolePerm): Promise<any>{
+      const role = await this.rolePermService.getRole(role_perm.role_id);
+        
+      if(!role){
+        throw new ConflictException("Not user for this user_role")
+        }
+        return role;
+    };
+
+  //Fin de la sección de recuperacion
 
   @Query(() => [RolePerm], { name: 'rolePerm' })
   findAll() {

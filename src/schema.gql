@@ -88,7 +88,7 @@ type Permission {
   """Example field (placeholder)"""
   id: Int!
   name: String!
-  role_perm: RolePerm!
+  role_perm: [RolePerm!]!
 }
 
 type Query {
@@ -118,7 +118,9 @@ type Role {
 type RolePerm {
   active: Boolean!
   id: Int!
+  permission: Permission!
   permission_id: Int!
+  role: Role!
   role_id: Int!
 }
 

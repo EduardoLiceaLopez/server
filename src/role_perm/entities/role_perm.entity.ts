@@ -4,7 +4,7 @@ import { Role } from 'src/roles/entities/role.entity';
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 
-//Esta entidad reune un rool y le asocia varios permisos
+//Esta entidad reune un role y le asocia varios permisos
 //Así como si estan activos o no
 @Entity('roles_perm')
 @ObjectType()
@@ -23,16 +23,17 @@ export class RolePerm {
 
   @ManyToOne(()=> Permission, permissions => permissions.role_perm)
   @JoinColumn({name: 'permission_id'})
+  @Field(()=> Permission)
   permission: Permission;
 
   //Para conectar con Roles
-
   @Field(()=> Int)
   @Column()
   role_id: number;
 
   @ManyToOne(()=> Role, role => role.role_perm)
   @JoinColumn({name: 'role_id'})
+  @Field(()=> Role)
   role: Role;
 
   //Indica si está activo el persmiso del role
@@ -40,5 +41,4 @@ export class RolePerm {
   @Field(()=> Boolean)
   @Column({default: true})
   active: Boolean;
-
 }

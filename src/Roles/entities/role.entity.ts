@@ -26,8 +26,8 @@ export class Role {
   @Field(()=> [UserRole])
   user_role: UserRole[];
 
-
+  @OneToMany(()=> RolePerm, (rolePerm) => rolePerm.role)
   @Field(()=> [RolePerm])
-  role_perm: [RolePerm]
+  role_perm: RolePerm[];
 
 }
