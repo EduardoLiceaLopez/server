@@ -1,11 +1,21 @@
 import { Injectable } from '@nestjs/common';
 import { CreateRolePermInput } from './dto/create-role_perm.input';
 import { UpdateRolePermInput } from './dto/update-role_perm.input';
+import { RolePerm } from './entities/role_perm.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class RolePermService {
+
+  constructor(
+    @InjectRepository(RolePerm)
+    private rolePermRepository: Repository<RolePerm>,
+  ){}
+
   create(createRolePermInput: CreateRolePermInput) {
-    return 'This action adds a new rolePerm';
+    const role_perm = this.rolePermRepository.create(createRolePermInput);
+    return this.rolePermRepository.save(role_perm);
   }
 
   findAll() {

@@ -235,6 +235,8 @@ CREATE TABLE roles(
 );
 
 CREATE TABLE roles_perm(
+	id INT PRIMARY KEY auto_increment,
+
 	permission_id INT NOT NULL,
 	role_id INT NOT NULL,
 	active TINYINT(1) DEFAULT 1,
@@ -244,6 +246,8 @@ CREATE TABLE roles_perm(
 );
 
 CREATE TABLE user_roles(
+
+	id INT PRIMARY KEY auto_increment, 
 	user_id INT NOT NULL,
 	role_id INT NOT NULL,
 

@@ -1,4 +1,4 @@
-import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
+import { ConflictException, ConsoleLogger, Injectable, NotFoundException } from '@nestjs/common';
 import { UserAccess } from 'src/user_access/entities/user_access.entity';
 import { UserAccessService } from 'src/user_access/user_access.service';
 import { JwtService } from '@nestjs/jwt';
@@ -6,6 +6,9 @@ import { LoginUserInput } from './dto/login-user.input';
 import { CreateUserAccessInput } from 'src/user_access/dto/create-user_access.input';
 import * as bcrypt from 'bcrypt';
 import { use } from 'passport';
+import { User } from 'src/users/user.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
 
 
@@ -15,6 +18,9 @@ export class AuthService {
 
     constructor(private userAccessService: UserAccessService,
             private jwtService: JwtService,
+
+            @InjectRepository(User)
+            private userRepository: Repository<User>,
         ){}
 
     async validateUserAccess(user_name: string, password: string): Promise <any>{
@@ -40,6 +46,11 @@ export class AuthService {
 
     async login(userAccess: UserAccess){
        //No hace falta const userAccess = await this.userAccessService.findOne(loginUserInput.user_name);
+
+       const user = this.userRepository.findOneBy({id: userAccess.user_id});
+       const user_role = (await user).user_role;
+       console.log(user_role);
+
         return {
             access_token: this.jwtService.sign({
                 user_name: userAccess.user_name,
@@ -47,6 +58,7 @@ export class AuthService {
                 role: userAccess.user_role,
             }),
             userAccess,
+ 
         };
     }
 

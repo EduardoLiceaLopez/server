@@ -3,18 +3,20 @@
 # ------------------------------------------------------
 
 input CreatePermissionInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  action: String!
+  description: String!
+  name: String!
 }
 
 input CreateRoleInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  description: String!
+  name: String!
 }
 
 input CreateRolePermInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  active: Boolean!
+  permission_id: Int!
+  role_id: Int!
 }
 
 input CreateUserAccessInput {
@@ -36,8 +38,8 @@ input CreateUserInput {
 }
 
 input CreateUserRoleInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  role_id: Int!
+  user_id: Int!
 }
 
 input CreateUserTypeInput {
@@ -121,21 +123,23 @@ type RolePerm {
 }
 
 input UpdatePermissionInput {
-  """Example field (placeholder)"""
-  exampleField: Int
+  action: String
+  description: String
   id: Int!
+  name: String
 }
 
 input UpdateRoleInput {
-  """Example field (placeholder)"""
-  exampleField: Int
+  description: String
   id: Int!
+  name: String
 }
 
 input UpdateRolePermInput {
-  """Example field (placeholder)"""
-  exampleField: Int
+  active: Boolean
   id: Int!
+  permission_id: Int
+  role_id: Int
 }
 
 input UpdateUserAccessInput {
@@ -159,9 +163,9 @@ input UpdateUserInput {
 }
 
 input UpdateUserRoleInput {
-  """Example field (placeholder)"""
-  exampleField: Int
   id: Int!
+  role_id: Int
+  user_id: Int
 }
 
 input UpdateUserTypeInput {

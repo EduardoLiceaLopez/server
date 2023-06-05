@@ -1,7 +1,12 @@
 import { InputType, Int, Field } from '@nestjs/graphql';
+import { In } from 'typeorm';
 
 @InputType()
 export class CreateUserRoleInput {
-  @Field(() => Int, { description: 'Example field (placeholder)' })
-  exampleField: number;
+
+  @Field(() => Int)
+  user_id: number;
+
+  @Field(() => Int)
+  role_id: number;
 }
