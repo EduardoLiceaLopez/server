@@ -72,28 +72,13 @@ export class AuthService {
 
     async login(userAccess: UserAccess){
 
-        //Esta consulta trae la tabla del usuario en cuestion segun su user_access (tabla que reune user_id y role_id)
-
-
         const user_roles = await this.userRoleRepository.findOneBy({user_id: userAccess.user_id});
 
-        //const roles = await this.roleService.findOne(user_roles.role_id);
-
+        //Ocupo un servicio de rolePerm
+        //RolePerm es la entidad que une roles con permisos
         const rolePermission = await this.rolePermService.findOneByRoleId(user_roles.role_id);
 
-
-       // const roles_perm = await this.rolesPermissionRepository.find({where:{role_id: user_roles.role_id}});
-        
-        //console.log(roles_perm.length);
-
-        //console.log(roles_perm);
-
         console.log(rolePermission);
-
-        /*
-        console.log(user_role);
-        console.log(role);
-        */
 
         return {
             access_token: this.jwtService.sign({
@@ -105,23 +90,6 @@ export class AuthService {
             rolePermission,
         };
     }
-
-
-/* async signup(loginUserInput: LoginUserInput){
-
-        //recomendar buscar por username o id? algo que sea unico (UNIQUE)
-        const userAccess = await this.userAccessService.findOne(loginUserInput.user_name);
-
-        if (userAccess){
-            
-            throw new Error('UserAcces already exists!');
-        }
-        
-        return this.userAccessService.createUserAccess({
-            ...loginUserInput,
-        });
-    }
-    */
 
     async newUserAccess(signupUserInput: CreateUserAccessInput){
 
