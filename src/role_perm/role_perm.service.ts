@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { ConflictException, Injectable } from '@nestjs/common';
 import { CreateRolePermInput } from './dto/create-role_perm.input';
 import { UpdateRolePermInput } from './dto/update-role_perm.input';
 import { RolePerm } from './entities/role_perm.entity';
@@ -53,12 +53,24 @@ async getRole(role_id: number): Promise<any>{
   //Fin de la seccion de recuperacion de entidades
 
   findAll() {
-    return `This action returns all rolePerm`;
+    return this.rolePermRepository.find();
   }
 
   findOne(id: number) {
     return `This action returns a #${id} rolePerm`;
   }
+
+  async findOneByRoleId(id: number) {
+    const roles = await this.rolePermRepository.find({where: {role_id: id}});
+
+    if (roles){
+      console.log(roles);
+      return roles;
+    } else {
+      throw new ConflictException('No sale');
+    }
+  }
+
 
   update(id: number, updateRolePermInput: UpdateRolePermInput) {
     return `This action updates a #${id} rolePerm`;

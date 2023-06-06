@@ -4,6 +4,7 @@ import { UpdateRoleInput } from './dto/update-role.input';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Role } from './entities/role.entity';
 import { Repository } from 'typeorm';
+import { Permission } from 'src/permissions/entities/permission.entity';
 
 @Injectable()
 export class RolesService {
@@ -12,6 +13,9 @@ export class RolesService {
         
     @InjectRepository(Role)
     private roleRepository: Repository<Role>,
+
+    @InjectRepository(Permission)
+    private permRepository: Repository<Role>,
   ){
   }
 
@@ -24,11 +28,11 @@ export class RolesService {
   }
 
   findAll() {
-    return `This action returns all roles`;
+    return this.roleRepository.find();
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} role`;
+    return this.roleRepository.findOneBy({id: id});
   }
 
   update(id: number, updateRoleInput: UpdateRoleInput) {
@@ -38,4 +42,13 @@ export class RolesService {
   remove(id: number) {
     return `This action removes a #${id} role`;
   }
+
+  async getPermission(permission_id: number): Promise<any>{
+    const permission = await this.permRepository.findOneBy({id: permission_id})
+
+    if(!permission){
+        return null;
+    }
+    return permission;
+};
 }

@@ -10,6 +10,7 @@ import { PermissionsModule } from 'src/permissions/permissions.module';
 
 @Module({
   imports: [TypeOrmModule.forFeature([RolePerm, Role, Permission]), RolesModule, PermissionsModule],
-  providers: [RolePermResolver, RolePermService]
+  providers: [RolePermResolver, RolePermService],
+  exports: [RolePermService],
 })
 export class RolePermModule {}

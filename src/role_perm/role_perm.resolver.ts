@@ -44,7 +44,7 @@ export class RolePermResolver {
 
   //Fin de la sección de recuperacion
 
-  @Query(() => [RolePerm], { name: 'rolePerm' })
+  @Query(() => [RolePerm], { name: 'rolePerms' })
   findAll() {
     return this.rolePermService.findAll();
   }
@@ -52,6 +52,10 @@ export class RolePermResolver {
   @Query(() => RolePerm, { name: 'rolePerm' })
   findOne(@Args('id', { type: () => Int }) id: number) {
     return this.rolePermService.findOne(id);
+  }
+  @Query(() => [RolePerm], { name: 'rolePermByRoles' })
+  findOneByRole(@Args('id', { type: () => Int }) id: number) {
+    return this.rolePermService.findOneByRoleId(id);
   }
 
   @Mutation(() => RolePerm)

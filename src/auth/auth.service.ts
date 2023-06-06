@@ -9,6 +9,13 @@ import { use } from 'passport';
 import { User } from 'src/users/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { UserRole } from 'src/user_role/entities/user_role.entity';
+import { RolePerm } from 'src/role_perm/entities/role_perm.entity';
+import { Permission } from 'src/permissions/entities/permission.entity';
+import { Role } from 'src/roles/entities/role.entity';
+import { RolePermService } from 'src/role_perm/role_perm.service';
+import { RolesResolver } from 'src/roles/roles.resolver';
+import { RolesService } from 'src/roles/roles.service';
 
 
 
@@ -21,6 +28,25 @@ export class AuthService {
 
             @InjectRepository(User)
             private userRepository: Repository<User>,
+
+            @InjectRepository(UserRole)
+            private userRoleRepository: Repository<UserRole>,
+
+            @InjectRepository(RolePerm)
+            private rolesPermissionRepository: Repository<RolePerm>,
+
+
+            @InjectRepository(Permission)
+            private permissionRepository: Repository<Permission>,
+
+            @InjectRepository(Role)
+            private roleRepository: Repository<Role>,
+
+
+            private rolePermService : RolePermService,
+
+            private roleService : RolesService,
+
         ){}
 
     async validateUserAccess(user_name: string, password: string): Promise <any>{
@@ -45,11 +71,29 @@ export class AuthService {
     }
 
     async login(userAccess: UserAccess){
-       //No hace falta const userAccess = await this.userAccessService.findOne(loginUserInput.user_name);
 
-       const user = this.userRepository.findOneBy({id: userAccess.user_id});
-       const user_role = (await user).user_role;
-       console.log(user_role);
+        //Esta consulta trae la tabla del usuario en cuestion segun su user_access (tabla que reune user_id y role_id)
+
+
+        const user_roles = await this.userRoleRepository.findOneBy({user_id: userAccess.user_id});
+
+        //const roles = await this.roleService.findOne(user_roles.role_id);
+
+        const rolePermission = await this.rolePermService.findOneByRoleId(user_roles.role_id);
+
+
+       // const roles_perm = await this.rolesPermissionRepository.find({where:{role_id: user_roles.role_id}});
+        
+        //console.log(roles_perm.length);
+
+        //console.log(roles_perm);
+
+        console.log(rolePermission);
+
+        /*
+        console.log(user_role);
+        console.log(role);
+        */
 
         return {
             access_token: this.jwtService.sign({
@@ -58,7 +102,7 @@ export class AuthService {
                 role: userAccess.user_role,
             }),
             userAccess,
- 
+            rolePermission,
         };
     }
 

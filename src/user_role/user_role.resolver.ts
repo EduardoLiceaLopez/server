@@ -41,7 +41,7 @@ export class UserRoleResolver {
   //Fin de las asociaciones
 
 
-  @Query(() => [UserRole], { name: 'userRole' })
+  @Query(() => [UserRole], { name: 'userRoles' })
   findAll() {
     return this.userRoleService.findAll();
   }

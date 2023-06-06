@@ -52,8 +52,8 @@ async getRole(role_id: number): Promise<any>{
 //Fin de los servicios que recuperan las entidades asociadas
 
   findAll() {
-    return `This action returns all userRole`;
-  }
+    return this.userRoleRepository.find();
+  };
 
   findOne(id: number) {
     return `This action returns a #${id} userRole`;

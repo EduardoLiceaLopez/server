@@ -48,6 +48,7 @@ input CreateUserTypeInput {
 
 type LoginResponse {
   access_token: String!
+  rolePermission: [RolePerm!]!
   userAccess: UserAccess!
 }
 
@@ -97,10 +98,13 @@ type Query {
   permissions: [Permission!]!
   role(id: Int!): Role!
   rolePerm(id: Int!): RolePerm!
+  rolePermByRoles(id: Int!): [RolePerm!]!
+  rolePerms: [RolePerm!]!
   roles: [Role!]!
   user(id: Int!): User!
   userAccess(user_name: String!): UserAccess!
   userRole(id: Int!): UserRole!
+  userRoles: [UserRole!]!
   userType(id: Int!): UserType!
   userTypes: [UserType!]!
   users: [User!]!
