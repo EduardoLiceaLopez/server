@@ -21,20 +21,8 @@ export class UserAccessService {
 
   //Funciones
   async createUserAccess(createUserAccessInput: CreateUserAccessInput): Promise<UserAccess> {
-    const userId = createUserAccessInput.user_id;
-    const newUserAccess = await this.userAccessRepository.findOneBy({user_id: userId})
-
-    if (newUserAccess){
-
-       this.userAccessRepository.create(createUserAccessInput);
-       return this.userAccessRepository.save(newUserAccess) ;
-    } else{
-      throw new NotFoundException('No one user asociated whit this ID')
-    }
-
-
-
-    
+      const newUserAccess =  this.userAccessRepository.create(createUserAccessInput);
+       return this.userAccessRepository.save(newUserAccess);
   };
 
   async findAll(): Promise<UserAccess[]> {

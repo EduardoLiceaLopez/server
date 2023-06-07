@@ -56,8 +56,6 @@ import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColum
        @Field(()=> [UserAccess])
        user_access: UserAccess[];
        //joinCoun
-       //
-
 
        //Coneccion con la tabla que reune los roles con los permisos
        @OneToMany(()=> UserRole, (userRole)=> userRole.user)

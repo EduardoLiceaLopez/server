@@ -100,7 +100,6 @@ export class AuthService {
             
             throw new ConflictException('User Acces already exists!');
         }
-
         const password = await bcrypt.hash(signupUserInput.password, 10);
         
         return this.userAccessService.createUserAccess({

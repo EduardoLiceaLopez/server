@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { ConflictException, Injectable } from '@nestjs/common';
 import { CreatePermissionInput } from './dto/create-permission.input';
 import { UpdatePermissionInput } from './dto/update-permission.input';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -19,11 +19,21 @@ export class PermissionsService {
   }
 
   findAll() {
-    return `This action returns all permissions`;
+    return this.permissionRepository.find();
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} permission`;
+    return this.permissionRepository.findOneBy({id: id});
+  }
+
+  findOneByAction(action: string){
+    const actionEx = this.permissionRepository.findOneBy({action: action}); 
+    
+    if( actionEx ){
+      return actionEx;
+    } else {
+      throw new ConflictException(`The ${action} action could not be found. Please make sure you have entered a valid action name and try again.`);
+    }
   }
 
   update(id: number, updatePermissionInput: UpdatePermissionInput) {
