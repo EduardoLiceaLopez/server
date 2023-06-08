@@ -235,22 +235,21 @@ CREATE TABLE roles(
 );
 
 CREATE TABLE roles_perm(
-	id INT PRIMARY KEY auto_increment,
 
-	permission_id INT NOT NULL,
-	role_id INT NOT NULL,
+	permission_id INT,
+	role_id INT,
 	active TINYINT(1) DEFAULT 1,
 
+	PRIMARY KEY (permission_id, role_id),
 	FOREIGN KEY (permission_id) REFERENCES permissions(id),
 	FOREIGN KEY (role_id) REFERENCES roles(id)
 );
 
-CREATE TABLE user_roles(
 
-	id INT PRIMARY KEY auto_increment, 
-	user_id INT NOT NULL,
-	role_id INT NOT NULL,
-
+CREATE TABLE users_role(
+	user_id INT,
+	role_id INT,
+	PRIMARY KEY(user_id, role_id),
 	FOREIGN KEY (user_id) REFERENCES users(id),
 	FOREIGN KEY (role_id) REFERENCES roles(id)
 );

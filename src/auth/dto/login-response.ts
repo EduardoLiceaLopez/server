@@ -13,7 +13,7 @@ export class LoginResponse{
     @Field(()=> UserAccess)
     userAccess: UserAccess;
 
-    @Field(()=>[RolePerm])
-    rolePermission: RolePerm[];
+    @Field(()=>[RolePerm], {nullable: true})
+    rolePermission?: RolePerm[];
     
 }

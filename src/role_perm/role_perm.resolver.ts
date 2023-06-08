@@ -49,10 +49,12 @@ export class RolePermResolver {
     return this.rolePermService.findAll();
   }
 
-  @Query(() => RolePerm, { name: 'rolePerm' })
+ /* @Query(() => RolePerm, { name: 'rolePerm' })
   findOne(@Args('id', { type: () => Int }) id: number) {
     return this.rolePermService.findOne(id);
   }
+
+  */
   @Query(() => [RolePerm], { name: 'rolePermByRoles' })
   findOneByRole(@Args('id', { type: () => Int }) id: number) {
     return this.rolePermService.findOneByRoleId(id);

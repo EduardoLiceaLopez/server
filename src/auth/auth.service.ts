@@ -72,13 +72,31 @@ export class AuthService {
 
     async login(userAccess: UserAccess){
 
-        const user_roles = await this.userRoleRepository.findOneBy({user_id: userAccess.user_id});
+        const user_roles = await this.userRoleRepository.findOne({
+            where:{user_id: userAccess.user_id}
+        });
 
+        if (!user_roles){
+
+           return {
+            access_token: this.jwtService.sign({
+                user_name: userAccess.user_name,
+                sub: userAccess.user_id,
+                role: userAccess.user_role,
+            }),
+            userAccess,
+            
+            }
+        }
+
+        console.log(user_roles);
         //Ocupo un servicio de rolePerm
         //RolePerm es la entidad que une roles con permisos
         const rolePermission = await this.rolePermService.findOneByRoleId(user_roles.role_id);
 
         console.log(rolePermission);
+        
+
 
         return {
             access_token: this.jwtService.sign({

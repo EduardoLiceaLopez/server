@@ -1,23 +1,19 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
 import { Role } from 'src/roles/entities/role.entity';
 import { User } from 'src/users/user.entity';
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn, PrimaryGeneratedColumn } from 'typeorm';
 
 /**
  * Esta entidad sirve como tabla union para 
  * Asigna a un usuario sus roles
  */
-@Entity('user_roles')
+@Entity('users_role')
 @ObjectType()
 export class UserRole {
 
-  @Field(() => Int)
-  @PrimaryGeneratedColumn()
-  id: number;
-
   ///Une con usuarios
-  @Column()
   @Field(()=> Int)
+  @PrimaryColumn()
   user_id: number;
 
   @ManyToOne(() => User, user => user.user_role)
@@ -25,9 +21,9 @@ export class UserRole {
   @Field(()=> User)
   user: User;
 
-  //Da sus respectivos roles
-  @Column()
+  //Da sus respectivos roless
   @Field(()=> Int)
+  @PrimaryColumn()
   role_id: number;
 
   @ManyToOne(()=> Role, role => role.user_role)
