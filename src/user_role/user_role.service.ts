@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateUserRoleInput } from './dto/create-user_role.input';
 import { UpdateUserRoleInput } from './dto/update-user_role.input';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -59,11 +59,43 @@ async getRole(role_id: number): Promise<any>{
     return `This action returns a #${id} userRole`;
   }
 
-  update(id: number, updateUserRoleInput: UpdateUserRoleInput) {
-    return `This action updates a #${id} userRole`;
+
+  async update(user_id: number, role_id: number,   updateUserRoleInput: UpdateUserRoleInput) {
+    const up_user_role = await this.userRoleRepository.update({role_id: role_id, user_id: user_id}, updateUserRoleInput);
+    if (up_user_role.affected == 0){
+
+      throw new NotFoundException('Sorry, there is not a user_role with this attributes');
+    }
+
+    const user_role = await this.userRoleRepository.findOne({where:{
+      role_id: role_id,
+      user_id: user_id
+    }});
+
+    console.log(up_user_role);
+    //return up_role_perm;
+
+    return user_role;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} userRole`;
+
+  async remove(role_id: number, user_id: number) {
+
+    const user_role = await this.userRoleRepository.findOne({where:{
+      role_id: role_id,
+      user_id: user_id
+    }});
+
+    const user_role_s = JSON.stringify(user_role); 
+
+    const de_user_role = await this.userRoleRepository.delete({role_id: role_id, user_id: user_id});
+
+    if (de_user_role.affected == 0){
+      throw new NotFoundException('Sorry, there is not a users_role with this attributes');
+
+    }else{
+      return user_role_s + " Ha sido eliminado el objeto anterior";
+    }
+
   }
 }

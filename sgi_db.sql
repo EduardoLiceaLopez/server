@@ -223,7 +223,7 @@ CREATE TABLE user_resources(
 CREATE TABLE permissions(
 
 	id INT PRIMARY KEY auto_increment,
-	action VARCHAR(75) NOT NULL,
+	action VARCHAR(75) NOT NULL UNIQUE, 
 	description VARCHAR(250),
 	name VARCHAR(50)
 );

@@ -53,11 +53,12 @@ export class UserRoleResolver {
 
   @Mutation(() => UserRole)
   updateUserRole(@Args('updateUserRoleInput') updateUserRoleInput: UpdateUserRoleInput) {
-    return this.userRoleService.update(updateUserRoleInput.id, updateUserRoleInput);
+    return this.userRoleService.update(updateUserRoleInput.role_id, updateUserRoleInput.user_id, updateUserRoleInput);
   }
 
+
   @Mutation(() => UserRole)
-  removeUserRole(@Args('id', { type: () => Int }) id: number) {
-    return this.userRoleService.remove(id);
+  removeUserRole(@Args('user_id', { type: () => Int })user_id: number, @Args('role_id', { type: () => Int }) role_id: number) {
+    return this.userRoleService.remove(user_id, role_id);
   }
 }

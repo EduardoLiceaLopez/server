@@ -62,11 +62,11 @@ export class RolePermResolver {
 
   @Mutation(() => RolePerm)
   updateRolePerm(@Args('updateRolePermInput') updateRolePermInput: UpdateRolePermInput) {
-    return this.rolePermService.update(updateRolePermInput.id, updateRolePermInput);
+    return this.rolePermService.update(updateRolePermInput.role_id, updateRolePermInput.permission_id, updateRolePermInput);
   }
 
-  @Mutation(() => RolePerm)
-  removeRolePerm(@Args('id', { type: () => Int }) id: number) {
-    return this.rolePermService.remove(id);
+  @Mutation(() => String)
+  removeRolePerm(@Args('role_id', { type: () => Int }) role_id: number, @Args('permission_id') permission_id: number) {
+    return this.rolePermService.remove(role_id, permission_id);
   }
 }

@@ -68,7 +68,7 @@ type Mutation {
   newUserAcces(signupUserInput: CreateUserAccessInput!): UserAccess!
   removePermission(id: Int!): Permission!
   removeRole(id: Int!): Role!
-  removeRolePerm(id: Int!): RolePerm!
+  removeRolePerm(permission_id: Float!, role_id: Int!): String!
   removeUser(id: Int!): Boolean!
   removeUserAccess(id: Int!): Boolean!
   removeUserRole(id: Int!): UserRole!
@@ -85,9 +85,6 @@ type Mutation {
 type Permission {
   action: String!
   description: String!
-
-  """Example field (placeholder)"""
-  id: Int!
   name: String!
   role_perm: [RolePerm!]!
 }
@@ -141,9 +138,8 @@ input UpdateRoleInput {
 
 input UpdateRolePermInput {
   active: Boolean
-  id: Int!
-  permission_id: Int
-  role_id: Int
+  permission_id: Int!
+  role_id: Int!
 }
 
 input UpdateUserAccessInput {

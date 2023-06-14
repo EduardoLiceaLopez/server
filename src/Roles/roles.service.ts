@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateRoleInput } from './dto/create-role.input';
 import { UpdateRoleInput } from './dto/update-role.input';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -35,13 +35,63 @@ export class RolesService {
     return this.roleRepository.findOneBy({id: id});
   }
 
-  update(id: number, updateRoleInput: UpdateRoleInput) {
-    return `This action updates a #${id} role`;
+  async update(id: number, updateRoleInput: UpdateRoleInput) {
+    
+    const role = await this.roleRepository.update(id, updateRoleInput);
+    
+    if (!role){
+      throw new NotFoundException(`There is not a role with ID ${id}`);
+    }
+  
+    return role;
   }
 
   remove(id: number) {
-    return `This action removes a #${id} role`;
+       const role_tem = this.roleRepository.findOneBy({id: id});
+
+       
   }
+
+  /**
+   * 
+   *   async update(role_id: number, perm_id: number,  updateRolePermInput: UpdateRolePermInput) {
+    const up_role_perm = await this.rolePermRepository.update({role_id: role_id, permission_id:perm_id}, updateRolePermInput);
+    if (up_role_perm.affected == 0){
+      throw new NotFoundException('Sorry, there is not a roles_permition with this attributes');
+    }
+
+    const role_perm = await this.rolePermRepository.findOne({where:{
+      role_id: role_id,
+      permission_id: perm_id
+    }});
+
+    console.log(up_role_perm);
+    //return up_role_perm;
+
+    return role_perm;
+  }
+
+  async remove(role_id: number, perm_id: number) {
+
+    const role_perm = await this.rolePermRepository.findOne({where:{
+      role_id: role_id,
+      permission_id: perm_id
+    }});
+
+    const role_perm_s = JSON.stringify(role_perm); 
+
+    const de_role_perm = await this.rolePermRepository.delete({role_id: role_id, permission_id: perm_id});
+
+    if (de_role_perm.affected == 0){
+      throw new NotFoundException('Sorry, there is not a roles_permition with this attributes');
+
+    }else{
+      return role_perm_s + " Ha sido eliminado el objeto anterior";
+    }
+
+  } 
+   */
+
 
   async getPermission(permission_id: number): Promise<any>{
     const permission = await this.permRepository.findOneBy({id: permission_id})

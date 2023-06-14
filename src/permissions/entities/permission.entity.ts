@@ -1,6 +1,6 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
 import { RolePerm } from 'src/role_perm/entities/role_perm.entity';
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryColumn, PrimaryGeneratedColumn } from 'typeorm';
 
 
 //Esta  entidad describe los permisos de cada Role
@@ -9,10 +9,11 @@ import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 export class Permission {
   
   @PrimaryGeneratedColumn()
-  @Field(() => Int, { description: 'Example field (placeholder)' })
+  //@Field(() => Int, { description: 'Example field (placeholder)' })
   id: number;
 
-  @Column()
+  //Es unique key
+  @Column({unique: true})
   @Field(()=> String)
   action: string;
   //Se describe tal cual una acción o función dentro de un servicio

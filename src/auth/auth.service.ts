@@ -60,10 +60,10 @@ export class AuthService {
             if(userAccess && valid){
                 const {password, ...result} = userAccess;
                 return result;
-    
             }
                 return null;
         } else{
+            
             throw new NotFoundException(`The user_name not exist`);
         }
 
