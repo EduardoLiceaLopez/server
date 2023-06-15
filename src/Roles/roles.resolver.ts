@@ -18,7 +18,6 @@ export class RolesResolver {
 
 
 
-
   @Query(() => [Role], { name: 'roles' })
   findAll() {
     return this.rolesService.findAll();

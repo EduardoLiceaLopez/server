@@ -37,9 +37,11 @@ export class PermissionsService {
   }
 
   update(id: number, updatePermissionInput: UpdatePermissionInput) {
-    return `This action updates a #${id} permission`;
+    const permission = this.permissionRepository.update(id, updatePermissionInput);
+    return permission;
   }
 
+  //Esta deberá funcionar???
   remove(id: number) {
     return `This action removes a #${id} permission`;
   }

@@ -71,7 +71,7 @@ type Mutation {
   removeRolePerm(permission_id: Float!, role_id: Int!): String!
   removeUser(id: Int!): Boolean!
   removeUserAccess(id: Int!): Boolean!
-  removeUserRole(id: Int!): UserRole!
+  removeUserRole(role_id: Int!, user_id: Int!): UserRole!
   removeUserType(id: Int!): UserType!
   updatePermission(updatePermissionInput: UpdatePermissionInput!): Permission!
   updateRole(updateRoleInput: UpdateRoleInput!): Role!
