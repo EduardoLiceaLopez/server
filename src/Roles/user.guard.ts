@@ -3,7 +3,6 @@ import { Reflector } from "@nestjs/core";
 import { Observable } from "rxjs";
 import * as jwt from 'jsonwebtoken';
 import { GqlExecutionContext } from "@nestjs/graphql";
-import { ForbiddenError } from "apollo-server-express";
 import { ExceptionsHandler } from "@nestjs/core/exceptions/exceptions-handler";
 
 @Injectable()

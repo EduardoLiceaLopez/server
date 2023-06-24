@@ -8,6 +8,7 @@ import { GqlAuthGuard } from './gql-auth.guard';
 import { UserAccess } from 'src/user_access/entities/user_access.entity';
 import { CreateUserAccessInput } from 'src/user_access/dto/create-user_access.input';
 import { UserAccessService } from 'src/user_access/user_access.service';
+import { LogoutResponse } from './dto/logout-response';
 
 @Resolver()
 export class AuthResolver {
@@ -32,4 +33,20 @@ export class AuthResolver {
         return this.authService.newUserAccess(signupUserInput)
     }
 
+    /*
+    @Query(() => String)
+    logout(@Context() context) {
+      const req = context.req;
+      const authHeader = req.headers['authorization'];
+      // Aquí puedes extraer el token de acceso del encabezado de autorización
+      // ...
+      return 'user';
+    }
+    */
+
+    @Mutation(() => String)
+    logOut(@Context() context){
+      //const executionContext = context.getContext();
+      return this.authService.logOut(context);
+    }
 }

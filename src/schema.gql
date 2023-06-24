@@ -65,6 +65,7 @@ type Mutation {
   createUserAccess(userAccessInput: CreateUserAccessInput!): UserAccess!
   createUserRole(createUserRoleInput: CreateUserRoleInput!): UserRole!
   createUserType(createUserTypeInput: CreateUserTypeInput!): UserType!
+  logOut: String!
   newUserAcces(signupUserInput: CreateUserAccessInput!): UserAccess!
   removePermission(id: Int!): Permission!
   removeRole(id: Int!): Role!

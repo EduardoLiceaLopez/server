@@ -1,11 +1,9 @@
-import { ConflictException, ConsoleLogger, Injectable, NotFoundException } from '@nestjs/common';
+import { ConflictException, ExecutionContext, Injectable, NotFoundException } from '@nestjs/common';
 import { UserAccess } from 'src/user_access/entities/user_access.entity';
 import { UserAccessService } from 'src/user_access/user_access.service';
 import { JwtService } from '@nestjs/jwt';
-import { LoginUserInput } from './dto/login-user.input';
 import { CreateUserAccessInput } from 'src/user_access/dto/create-user_access.input';
 import * as bcrypt from 'bcrypt';
-import { use } from 'passport';
 import { User } from 'src/users/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -14,8 +12,12 @@ import { RolePerm } from 'src/role_perm/entities/role_perm.entity';
 import { Permission } from 'src/permissions/entities/permission.entity';
 import { Role } from 'src/roles/entities/role.entity';
 import { RolePermService } from 'src/role_perm/role_perm.service';
-import { RolesResolver } from 'src/roles/roles.resolver';
 import { RolesService } from 'src/roles/roles.service';
+import { Observable, throwError } from 'rxjs';
+import { GqlExecutionContext } from '@nestjs/graphql';
+import * as jwt from 'jsonwebtoken';
+import * as moment from 'moment';
+import { sign } from 'jsonwebtoken';
 
 
 
@@ -96,8 +98,6 @@ export class AuthService {
 
         console.log(rolePermission);
         
-
-
         return {
             access_token: this.jwtService.sign({
                 user_name: userAccess.user_name,
@@ -125,4 +125,32 @@ export class AuthService {
             password,
         });
     }
+
+        //Permite cerrar sesion actual, creando un token con los mismos datos pero ya expirado
+    async logOut(context){
+
+        const token = await context.req.headers.authorization.replace('Bearer ', '');
+        const decoded_token = await this.jwtService.decode(token);
+
+        console.log(decoded_token);
+
+        if (typeof decoded_token === 'object') {
+ 
+            const { exp, ...payload } = decoded_token; // Extraemos la propiedad `exp` del payload
+
+            console.log(payload);
+
+            const newToken = sign(payload, 'hide-me', { expiresIn: '1s' }); // Nuevo token con expiración de 1 segundo
+        
+            console.log(newToken);
+            return newToken;
+
+          } else{
+
+            throw new ConflictException(`Logout could not be completed due to a conflict with your current session's access tokes`);
+          }
+
+   
+    }
+
 }
