@@ -20,10 +20,10 @@ export class UserAccess {
   @Field(()=> String)
   user_name: string;
 
-  //sasajsasa
   @Column()
   password: string;
 
+  //A modificar
   @Column()
   @Field()
   user_role: string;
