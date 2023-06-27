@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateUserRoleInput } from './dto/create-user_role.input';
 import { UpdateUserRoleInput } from './dto/update-user_role.input';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -50,6 +50,19 @@ async getRole(role_id: number): Promise<any>{
   return role;
 };
 //Fin de los servicios que recuperan las entidades asociadas
+
+
+
+  findOneByUserId(user_id: number){
+
+    const user_role = this.userRoleRepository.findOneBy({user_id: user_id});
+
+    if(!user_role){
+      throw new ConflictException('No user_role whit this user_id');
+    }
+
+    return user_role;
+  };
 
   findAll() {
     return this.userRoleRepository.find();

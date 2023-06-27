@@ -26,8 +26,7 @@ export class UsersResolver {
         return this.usersService.finAll();
     }
 
-    @UseGuards(User_adminGuard)
-    
+    //@UseGuards(User_adminGuard) 
     @Query((returns) => User)
     user(@Args('id', {type: () => Int}) id : number){
         return this.usersService.findUserById(id);

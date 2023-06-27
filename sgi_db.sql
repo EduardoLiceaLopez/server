@@ -1,7 +1,14 @@
+CREATE DATABASE sgi_db;
+
+USE sgi_db;
+
+
 CREATE TABLE user_types(
 	id INT PRIMARY KEY auto_increment,
 	name VARCHAR(50) NOT NULL
 );
+
+INSERT INTO user_types (name) VALUES ('superAdmin');
 
 CREATE TABLE users(
 
@@ -18,6 +25,9 @@ CREATE TABLE users(
 	FOREIGN KEY (user_type_id) REFERENCES user_types(id) ON DELETE CASCADE
 );
 
+INSERT INTO users (name, middle_name, last_name, curp, rfc, phone_number, email, user_type_id) 
+VALUES ('Super', 'Admin', 'SA', 'CURP12345678901234', 'RFC1234567890', '1234567890', 'admin@example.com', 1);
+
 CREATE TABLE user_access(
 	id INT PRIMARY KEY auto_increment,
 	user_id INT NOT NULL,
@@ -26,6 +36,8 @@ CREATE TABLE user_access(
 	user_role VARCHAR(40) NOT NULL,
 	FOREIGN KEY (user_id) REFERENCES users(id)
 );
+INSERT INTO user_access (user_id, user_name, password, user_role)
+VALUES (1, 'SuperAdmin', '$2b$10$DfKL4nj/ueVK5N81Wccbgustzx/a.yCV52Qu4f6BtPdi85fxNaRwm', 'admin');
 
 CREATE TABLE base(
 	user_id INT PRIMARY KEY,

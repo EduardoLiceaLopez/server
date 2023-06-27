@@ -23,7 +23,6 @@ input CreateUserAccessInput {
   password: String!
   user_id: Int!
   user_name: String!
-  user_role: String!
 }
 
 input CreateUserInput {
@@ -148,7 +147,6 @@ input UpdateUserAccessInput {
   password: String
   user_id: Int
   user_name: String
-  user_role: String
 }
 
 input UpdateUserInput {

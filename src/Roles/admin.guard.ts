@@ -15,7 +15,10 @@ export class AdminGuard implements CanActivate {
 
         const decodedToken = jwt.verify(token, 'hide-me') as {role : string};
         ctx.getContext().req.user = {user_role: decodedToken.role};
-        return decodedToken.role.includes('admin');
+
+
+
+        return decodedToken.role.includes('admin') || decodedToken.role.includes('Admin') || decodedToken.role.includes('Administrador') ;
 
       }catch (err){
         

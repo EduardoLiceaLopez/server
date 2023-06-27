@@ -5,6 +5,8 @@ import { Repository } from 'typeorm';
 import { CreateUserAccessInput } from './dto/create-user_access.input';
 import { UpdateUserAccessInput } from './dto/update-user_access.input';
 import { UserAccess } from './entities/user_access.entity';
+import { UserRoleService } from 'src/user_role/user_role.service';
+import { Role } from 'src/roles/entities/role.entity';
 
 
 @Injectable()
@@ -16,13 +18,43 @@ export class UserAccessService {
       private userAccessRepository: Repository<UserAccess>,
 
       private usersService: UsersService,
+
+      private userRoleService: UserRoleService, 
+
+      @InjectRepository(Role)
+      private roleRepository: Repository<Role>,
       
       ){};
 
   //Funciones
   async createUserAccess(createUserAccessInput: CreateUserAccessInput): Promise<UserAccess> {
+
+    const pre_user_access = await this.userAccessRepository.create(createUserAccessInput);
+
+    const user_id = await createUserAccessInput.user_id;
+
+    const user_role = await this.userRoleService.findOneByUserId(user_id);
+
+    const role = (await this.roleRepository.findOneBy({id: user_role.role_id})).name;
+
+   // const role = role_name.name;
+
+    const userAccess = new UserAccess();
+
+    userAccess.password = pre_user_access.password;
+    userAccess.user_id = pre_user_access.user_id;
+    userAccess.user_name = pre_user_access.user_name;
+    //Ya asignamos el role en funcion del usuario y su role
+    userAccess.user_role = role;
+
+    const userAccess_d = await this.userAccessRepository.save(userAccess);
+
+  return userAccess_d;
+  /*
       const newUserAccess =  this.userAccessRepository.create(createUserAccessInput);
        return this.userAccessRepository.save(newUserAccess);
+
+       */
   };
 
   async findAll(): Promise<UserAccess[]> {

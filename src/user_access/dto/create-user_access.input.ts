@@ -16,6 +16,10 @@ export class CreateUserAccessInput {
   password: string;
   
 
+  /*
   @Field()
   user_role: string;
+
+  */
+ 
 }

@@ -68,9 +68,7 @@ async getRole(role_id: number): Promise<any>{
     const roles = await this.rolePermRepository.find({where: {role_id: id}});
 
     if (roles){
-
       return roles;
-
     } else {
       
       throw new ConflictException('No roles_perm for this user');

@@ -102,7 +102,7 @@ export class AuthService {
             access_token: this.jwtService.sign({
                 user_name: userAccess.user_name,
                 sub: userAccess.user_id,
-                role: userAccess.user_role,
+                role: userAccess.user_id,
             }),
             userAccess,
             rolePermission,

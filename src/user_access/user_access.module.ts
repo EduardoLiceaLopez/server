@@ -8,9 +8,12 @@ import { UsersModule } from 'src/users/users.module';
 import { User } from 'src/users/user.entity';
 import { AdminGuard } from 'src/Roles/admin.guard';
 import { UserGuard } from 'src/Roles/user.guard';
+import { UserRoleModule } from 'src/user_role/user_role.module';
+import { RolesModule } from 'src/roles/roles.module';
+import { Role } from 'src/roles/entities/role.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([UserAccess]), UserAccessModule, UsersModule],
+  imports: [TypeOrmModule.forFeature([UserAccess, Role]), UserAccessModule, UsersModule, UserRoleModule, RolesModule],
   providers: [UserAccessResolver, UserAccessService, AdminGuard, UserGuard], //UserAccessService
   exports: [UserAccessService],
 })

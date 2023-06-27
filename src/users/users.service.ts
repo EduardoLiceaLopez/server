@@ -35,6 +35,8 @@ export class UsersService {
             throw new NotFoundException(`User with ID ${id} not found`);
         }
     };
+
+    
     createUser(users: CreateUserInput): Promise<User>{
         const newUser = this.userRepository.create(users);
         return this.userRepository.save(newUser);//Correción
