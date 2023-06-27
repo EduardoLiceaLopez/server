@@ -29,6 +29,13 @@ export class UserAccessService {
   //Funciones
   async createUserAccess(createUserAccessInput: CreateUserAccessInput): Promise<UserAccess> {
 
+
+    const user_e = await this.usersService.findUserById(createUserAccessInput.user_id);
+
+    if (!user_e){
+      throw new NotFoundException(`There is not a user with this id ${createUserAccessInput.user_id}`);
+    }
+
     const pre_user_access = await this.userAccessRepository.create(createUserAccessInput);
 
     const user_id = await createUserAccessInput.user_id;
